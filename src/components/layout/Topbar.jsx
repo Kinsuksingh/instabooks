@@ -6,8 +6,10 @@ import { FiSun} from "react-icons/fi";
 /* ================= Styles ================= */
 
 const SafeSticky = styled(Navbar)`
-  position: sticky !important;
+  position: fixed !important;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1030;
   background: rgba(255, 255, 255, 0.8) !important;
   backdrop-filter: saturate(180%) blur(14px);
@@ -15,6 +17,7 @@ const SafeSticky = styled(Navbar)`
   padding-bottom: 6px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 `;
+
 
 const Bar = styled.div`
   width: 100%;
