@@ -105,18 +105,18 @@ export default function InstagramSidebar() {
   const { pathname } = useLocation();
 
   const links = [
-    { to: "/", icon: <FiHome />, label: "Home" },
-    { to: "/search", icon: <FiSearch />, label: "Search" },
-    { to: "/explore", icon: <FiPlusSquare />, label: "Explore" },
-    { to: "/messages", icon: <FiBookOpen />, label: "Messages", hasNotification: true },
-    { to: "/notifications", icon: <FiHeart />, label: "Notifications" },
-    { to: "/create", icon: <FiPlusSquare />, label: "Create" },
-    { to: "/profile", icon: <FiUser />, label: "Profile" },
+    { to: "/instabooks/", icon: <FiHome />, label: "Home" },
+    { to: "/instabooks/search", icon: <FiSearch />, label: "Search" },
+    { to: "/instabooks/explore", icon: <FiPlusSquare />, label: "Explore" },
+    { to: "/instabooks/messages", icon: <FiBookOpen />, label: "Messages", hasNotification: true },
+    { to: "/instabooks/notifications", icon: <FiHeart />, label: "Notifications" },
+    { to: "/instabooks/create", icon: <FiPlusSquare />, label: "Create" },
+    { to: "/instabooks/profile", icon: <FiUser />, label: "Profile" },
   ];
 
   return (
     <SidebarContainer>
-      <Logo to="/">
+      <Logo to="/instabooks/">
         <LogoText>InstaBooks</LogoText>
       </Logo>
 
@@ -139,7 +139,7 @@ export default function InstagramSidebar() {
       </NavLinks>
 
       <BottomSection>
-        <NavLink to="/more">
+        <NavLink to="/instabooks/more">
           <IconWrapper>
             <FiMenu />
           </IconWrapper>

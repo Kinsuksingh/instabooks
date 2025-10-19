@@ -89,7 +89,7 @@ export default function Topbar() {
         <Container fluid className="px-3">
           <Bar>
             <Left>
-              <Logo to="/" aria-label="Go to home">
+              <Logo to="/instabooks/" aria-label="Go to home">
                 <LogoText>InstaBooks</LogoText>
               </Logo>
             </Left>

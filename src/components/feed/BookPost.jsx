@@ -1,49 +1,73 @@
-import { Card, Image } from "react-bootstrap";
-import { FiHeart, FiMessageCircle, FiSend, FiBookmark } from "react-icons/fi";
-import { useState } from "react";
+// components/feed/BookPost.jsx
+import { Card, Button } from "react-bootstrap";
+import {
+  FiHeart,
+  FiMessageCircle,
+  FiSend,
+  FiBookmark,
+} from "react-icons/fi";
 
-export default function BookPost({ user, cover, title, quote, likes, time }) {
-  const [liked, setLiked] = useState(false);
-
+export default function BookPost({
+  user,
+  cover,
+  title,
+  chapterNo,
+  quote,
+  pageRange,       // e.g., "pp. 23–31" (optional)
+  likes = 0,
+  time = "now",
+  onLike,
+  onComment,
+  onSend,
+  onSave,
+}) {
   return (
-    <Card className="shadow-sm">
-      <Card.Header className="bg-white d-flex align-items-center gap-2">
-        <Image
-          src={`https://api.dicebear.com/9.x/initials/svg?seed=${user}`}
-          roundedCircle
-          width={32}
-          height={32}
+    <Card className="border-0 shadow-sm rounded-4">
+      {/* header */}
+      <Card.Header className="bg-white d-flex align-items-center gap-2 border-0">
+        <div
+          className="rounded-circle bg-secondary flex-shrink-0"
+          style={{ width: 36, height: 36, opacity: 0.3 }}
+          aria-hidden
         />
-        <strong>{user}</strong>
+        <div className="me-auto">
+          <div className="fw-semibold">@{user}</div>
+          <div className="text-muted small">{time}</div>
+        </div>
+        <div className="small text-muted">Ch {chapterNo}</div>
       </Card.Header>
 
-      <Image
-        src={cover}
-        alt={title}
-        style={{ width: "100%", aspectRatio: "1/1", objectFit: "cover" }}
-      />
+      {/* media */}
+      <div className="ratio ratio-1x1">
+        <img src={cover} alt={title} className="object-fit-cover w-100 h-100" />
+      </div>
 
-      <Card.Body>
-        <div className="d-flex align-items-center gap-3 fs-5 mb-2">
-          <span role="button" onClick={() => setLiked((v) => !v)}>
-            {liked ? "❤️" : <FiHeart />}
-          </span>
-          <FiMessageCircle />
-          <FiSend />
-          <div className="ms-auto">
-            <FiBookmark />
-          </div>
+      {/* actions */}
+      <Card.Body className="pb-2">
+        <div className="d-flex align-items-center gap-2 mb-2">
+          <Button variant="link" className="p-0" onClick={onLike}>
+            <FiHeart size={22} />
+          </Button>
+          <Button variant="link" className="p-0" onClick={onComment}>
+            <FiMessageCircle size={22} />
+          </Button>
+          <Button variant="link" className="p-0 me-auto" onClick={onSend}>
+            <FiSend size={22} />
+          </Button>
+          <Button variant="link" className="p-0" onClick={onSave}>
+            <FiBookmark size={22} />
+          </Button>
         </div>
-        <div className="fw-semibold">
-          {(liked ? likes + 1 : likes).toLocaleString()} likes
+
+        {/* caption */}
+        <div className="mb-1">
+          <span className="fw-semibold">{title}</span>{" "}
+          {pageRange && <span className="text-muted small">({pageRange})</span>}
         </div>
-        <div className="mt-1">
-          <span className="fw-semibold me-2">{title}</span>
-          <span className="text-muted">“{quote}”</span>
-        </div>
-        <div className="text-uppercase text-muted mt-1" style={{ fontSize: 12 }}>
-          {time} ago
-        </div>
+        {quote && (
+          <blockquote className="mb-2 fst-italic">“{quote}”</blockquote>
+        )}
+        <div className="small text-muted">{likes.toLocaleString()} likes</div>
       </Card.Body>
     </Card>
   );

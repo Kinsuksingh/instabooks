@@ -186,7 +186,7 @@ export default function App() {
           </MobileTopbar>
 
           <Routes>
-            <Route path="/" element={<Feed />} />
+            <Route path="/instabooks/" element={<Feed />} />
           </Routes>
         </MainContent>
 

@@ -5,11 +5,11 @@ import { Link, useLocation } from "react-router-dom";
 export default function BottomNav() {
   const { pathname } = useLocation();
   const navItems = [
-    ["/", <FiHome />],
-    ["/search", <FiSearch />],
-    ["/add", <FiPlusSquare />],
-    ["/library", <FiBookOpen />],
-    ["/profile", <FiUser />],
+    ["/instabooks/", <FiHome />],
+    ["/instabooks/search", <FiSearch />],
+    ["/instabooks/add", <FiPlusSquare />],
+    ["/instabooks/library", <FiBookOpen />],
+    ["/instabooks/profile", <FiUser />],
   ];
 
   return (
