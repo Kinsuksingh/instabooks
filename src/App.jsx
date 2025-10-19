@@ -106,6 +106,7 @@ const ResizeHandle = styled.div`
 
 const MobileTopbar = styled.div`
   display: block;
+  margin-bottom: 60px;
 
   @media (min-width: 1024px) {
     display: none;

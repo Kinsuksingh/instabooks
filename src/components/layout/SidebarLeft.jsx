@@ -1,6 +1,12 @@
 import { FiHome, FiSearch, FiPlusSquare, FiBookOpen, FiUser, FiMenu, FiHeart } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+const shine = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
 
 const SidebarContainer = styled.aside`
   width: 245px;
@@ -23,8 +29,6 @@ const Logo = styled(Link)`
   display: flex;
   align-items: center;
   transition: padding 200ms ease, margin 200ms ease;
-
-  
 `;
 
 const LogoText = styled.div`
@@ -35,41 +39,70 @@ const LogoText = styled.div`
   transition: opacity 150ms ease;
 `;
 
-
-
 const NavLinks = styled.nav`
   display: flex;
   flex-direction: column;
   flex: 1;
 `;
 
+const activeStyles = css`
+  color: #00dbe4;
+  font-weight: 700;
+  transform: translateX(2px) scale(1.02);
+  svg { stroke-width: 2.5; }
+
+  /* Glowing animated bar on the left */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #00F5FF, #0088FF, #00F5FF);
+    background-size: 200% 200%;
+    animation: ${shine} 4s linear infinite;
+    box-shadow: 0 0 8px rgba(0, 245, 255, 0.8);
+  }
+`;
+
 const NavLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 12px 12px;
-  margin: 4px 0;
+  padding: 12px 12px 12px 16px;
+  margin: 4px 8px;
   border-radius: 8px;
   text-decoration: none;
   font-size: 16px;
   font-weight: ${(props) => (props.$active ? "700" : "400")};
   color: #262626;
   background: transparent;
-  transition: background-color 150ms ease, padding 200ms ease, gap 200ms ease;
+  transition: background-color 150ms ease, transform 200ms ease, color 150ms ease;
   position: relative;
   cursor: pointer;
+  outline: none;
 
   &:hover {
     background-color: #fafafa;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(0, 245, 255, 0.3);
+    border-radius: 10px;
   }
 
   svg {
     font-size: 26px;
     stroke-width: ${(props) => (props.$active ? "2.5" : "2")};
     min-width: 26px;
-    margin-left: 12px;
+    margin-left: 8px;
     flex-shrink: 0;
+    transition: stroke-width 150ms ease;
   }
+
+  ${(props) => props.$active && activeStyles}
 `;
 
 const BottomSection = styled.div`
@@ -87,19 +120,9 @@ const IconWrapper = styled.span`
 const LabelText = styled.span`
   white-space: nowrap;
   transition: opacity 120ms ease, width 200ms ease;
-
 `;
 
-const NotificationBadge = styled.div`
-  position: absolute;
-  top: 8px;
-  left: 32px;
-  width: 8px;
-  height: 8px;
-  background: #ff3040;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
-`;
+
 
 export default function InstagramSidebar() {
   const { pathname } = useLocation();
@@ -125,7 +148,7 @@ export default function InstagramSidebar() {
           <NavLink key={link.to} to={link.to} $active={pathname === link.to}>
             <IconWrapper>{link.icon}</IconWrapper>
             <LabelText>{link.label}</LabelText>
-            {link.hasNotification && <NotificationBadge />}
+            {link.hasNotification}
           </NavLink>
         ))}
 
@@ -139,10 +162,8 @@ export default function InstagramSidebar() {
       </NavLinks>
 
       <BottomSection>
-        <NavLink to="/instabooks/more">
-          <IconWrapper>
-            <FiMenu />
-          </IconWrapper>
+        <NavLink to="/instabooks/more" $active={pathname === "/instabooks/more"}>
+          <IconWrapper><FiMenu /></IconWrapper>
           <LabelText>More</LabelText>
         </NavLink>
       </BottomSection>
