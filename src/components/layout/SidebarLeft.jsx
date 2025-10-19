@@ -1,7 +1,6 @@
 import { FiHome, FiSearch, FiPlusSquare, FiBookOpen, FiUser, FiMenu, FiHeart } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Book } from "lucide-react";
 
 const SidebarContainer = styled.aside`
   width: 245px;
@@ -36,11 +35,7 @@ const LogoText = styled.div`
   transition: opacity 150ms ease;
 `;
 
-const LogoIcon = styled.div`
-  font-size: 28px;
-  display: none;
-  margin-right: 12px;
-`;
+
 
 const NavLinks = styled.nav`
   display: flex;
@@ -123,9 +118,6 @@ export default function InstagramSidebar() {
     <SidebarContainer>
       <Logo to="/">
         <LogoText>InstaBooks</LogoText>
-        <LogoIcon>
-          <Book size={30} strokeWidth={1} />
-        </LogoIcon>
       </Logo>
 
       <NavLinks>

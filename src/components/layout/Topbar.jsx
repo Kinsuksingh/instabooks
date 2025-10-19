@@ -1,52 +1,112 @@
-import { Navbar, Container, Image } from "react-bootstrap";
+import { Navbar, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { FiSun} from "react-icons/fi";
+
+/* ================= Styles ================= */
+
+const SafeSticky = styled(Navbar)`
+  position: sticky !important;
+  top: 0;
+  z-index: 1030;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: saturate(180%) blur(14px);
+  padding-top: max(env(safe-area-inset-top), 6px);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+`;
+
+const Bar = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+`;
+
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Center = styled.div`
+  justify-self: center;
+`;
+
+const Right = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+`;
+
+const IconBtn = styled.button`
+  border: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 12px;
+  transition: transform 120ms ease, background 120ms ease;
+  &:active {
+    transform: scale(0.96);
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+`;
+
+const Logo = styled(Link)`
+  padding: 10px 12px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+`;
+
+const LogoText = styled.div`
+  font-size: 28px;
+  font-family: "Cookie", cursive;
+  color: #262626;
+  letter-spacing: 0.2px;
+  line-height: 1;
+`;
+
+/* ================= Component ================= */
 
 export default function Topbar() {
-  // Temporary story data — each one represents a concept
-  const stories = [
-    { id: 1, title: "Nutrition", img: "https://picsum.photos/seed/nutrition/80" },
-    { id: 2, title: "Respiration", img: "https://picsum.photos/seed/respiration/80" },
-    { id: 3, title: "Transportation", img: "https://picsum.photos/seed/transport/80" },
-    { id: 4, title: "Excretion", img: "https://picsum.photos/seed/excretion/80" },
-    { id: 5, title: "Nutrition", img: "https://picsum.photos/seed/nutrition/80" },
-    { id: 6, title: "Respiration", img: "https://picsum.photos/seed/respiration/80" },
-    { id: 7, title: "Transportation", img: "https://picsum.photos/seed/transport/80" },
-    { id: 8, title: "Excretion", img: "https://picsum.photos/seed/excretion/80" },
-  ];
+  const ThemeIcon = FiSun ;
 
-  // When a story is clicked
-  const handleStoryClick = (concept) => {
-    console.log(`Concept clicked: ${concept}`);
+  const handleToggle = () => {
+    console.log("Toggled theme to");
   };
 
   return (
     <div className="topbar-wrapper">
-      {/* Top navbar (like Instagram header) */}
-      <Navbar bg="white" className="shadow-sm sticky-top d-lg-none">
-        <Container className="justify-content-center">
-          <Navbar.Brand className="fw-bold fs-4">📚 InstaBooks</Navbar.Brand>
-        </Container>
-      </Navbar>
+      {/* Mobile-only top bar */}
+      <SafeSticky bg="white" className="shadow-sm d-lg-none">
+        <Container fluid className="px-3">
+          <Bar>
+            <Left>
+              <Logo to="/" aria-label="Go to home">
+                <LogoText>InstaBooks</LogoText>
+              </Logo>
+            </Left>
 
-      {/* Stories scroll area */}
-      <div className="stories-container d-flex gap-3 px-3 py-2 overflow-auto bg-white border-bottom">
-        {stories.map((s) => (
-          <div
-            key={s.id}
-            className="story text-center"
-            onClick={() => handleStoryClick(s.title)}
-          >
-            <div className="story-circle mx-auto">
-              <Image
-                src={s.img}
-                alt={s.title}
-                roundedCircle
-                className="story-image"
-              />
-            </div>
-            <small className="story-label d-block mt-1 text-truncate">{s.title}</small>
-          </div>
-        ))}
-      </div>
+            <Center />
+
+            <Right>
+              <IconBtn
+                type="button"
+                onClick={handleToggle}
+              >
+                <ThemeIcon size={20} />
+              </IconBtn>
+            </Right>
+          </Bar>
+        </Container>
+      </SafeSticky>
     </div>
   );
 }
