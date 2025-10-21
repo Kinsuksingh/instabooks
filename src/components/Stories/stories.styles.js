@@ -76,13 +76,32 @@ export const StoryName = styled.span`
 
 export const Overlay = styled.div`
   position: fixed;
-  inset: 0;
-  background: black;
-  z-index: 50;
+  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0; shorthand */
+  background: rgba(0, 0, 0, 0.92); /* slightly transparent for depth */
+  z-index: 9999; /* ensures it sits above sidebars and topbar */
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Smooth fade-in/out transition */
+  opacity: 1;
+  transition: opacity 0.25s ease;
+
+  /* optional state classes (if you want to animate mount/unmount) */
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Responsiveness: keep full screen on all devices */
+  width: 100vw;
+  height: 100vh;
+
+  /* optional: backdrop blur for better feel */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 `;
+
 
 export const CloseBtn = styled.button`
   position: absolute;
