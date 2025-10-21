@@ -2,6 +2,7 @@ import { Navbar, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { FiSun} from "react-icons/fi";
+import { FaBookReader } from 'react-icons/fa';
 
 /* ================= Styles ================= */
 
@@ -79,8 +80,8 @@ const LogoText = styled.div`
 /* ================= Component ================= */
 
 export default function Topbar() {
-  const ThemeIcon = FiSun ;
-
+  const ThemeIcon = FaBookReader;   //const ThemeIcon = FiSun;
+  
   const handleToggle = () => {
     console.log("Toggled theme to");
   };

@@ -75,7 +75,6 @@ const CardData = [
     description: "Daily active users, average screen time, and platform mix.",
     imgSrc:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop",
-    badge: "Quick Facts",
   },
   {
     id: 2,
@@ -83,7 +82,6 @@ const CardData = [
     description: "Where AI adoption is accelerating the fastest.",
     imgSrc:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
-    badge: "Trending",
   },
   {
     id: 3,
@@ -91,14 +89,13 @@ const CardData = [
     description: "Top habits that cut risk by 80%.",
     imgSrc:
       "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?q=80&w=1600&auto=format&fit=crop",
-    badge: "Security",
   },
 ];
 
 const DemoGrid = styled.div`
   min-height: 100vh;
   place-items: center;
-  padding: 32px;
+  padding: 15px;
   background: radial-gradient(
       40% 60% at 20% 10%,
       rgba(99, 102, 241, 0.18) 0%,
