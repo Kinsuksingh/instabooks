@@ -159,10 +159,9 @@ export const ProgressRow = styled.div`
   gap: 4px;
   
   @media (max-width: 768px) {
-    top: env(safe-area-inset-top, 16px);
-    top: max(env(safe-area-inset-top), 16px);
-    left: 8px;
-    right: 8px;
+    top: 0px;
+    left: 5px;
+    right: 5px;
     gap: 3px;
   }
 `;
@@ -213,10 +212,9 @@ export const Header = styled.div`
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   
   @media (max-width: 768px) {
-    top: calc(env(safe-area-inset-top, 16px) + 8px);
-    top: calc(max(env(safe-area-inset-top), 16px) + 8px);
-    left: 8px;
-    right: 8px;
+    top: 0px;
+    left: 1px;
+    right: 1px;
     padding: 8px 10px;
     gap: 10px;
     border-radius: 12px;
