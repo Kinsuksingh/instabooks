@@ -124,15 +124,15 @@ export const StoryShell = styled.div`
   max-width: 500px;
   display: flex;
   flex-direction: column;
+  padding: 0 40px;
 `;
 
 export const ProgressRow = styled.div`
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 40px;
+  right: 40px;
   z-index: 40;
-  padding: 0px;
   display: flex;
   gap: 5px;
 `;
@@ -193,6 +193,7 @@ export const HeaderSub = styled.div`
 export const Slides = styled.div`
   position: relative;
   flex: 1;
+  padding: 0 16px;
 `;
 
 export const SlideImg = styled.img`
