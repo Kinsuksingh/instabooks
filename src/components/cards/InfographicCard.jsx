@@ -41,9 +41,6 @@ const Img = styled.img`
 `;
 
 
-
-
-
 const IconBtn = styled.button`
   display: grid;
   place-items: center;
