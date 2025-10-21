@@ -38,19 +38,22 @@ export default function StoriesOverlay({
     duration,
   });
 
-  // Force repaint so inline width reflects ref-held progress value
+  // Respect reduced motion: don't repaint every frame if user prefers less motion
+  const prefersReduced = typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   const [, setForceUpdate] = useState(0);
   useEffect(() => {
+    if (!isOpen || prefersReduced) return;
     let frame;
-    if (isOpen) {
-      const animate = () => {
-        setForceUpdate((v) => v + 1);
-        frame = requestAnimationFrame(animate);
-      };
+    const animate = () => {
+      setForceUpdate((v) => v + 1);
       frame = requestAnimationFrame(animate);
-    }
+    };
+    frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
-  }, [isOpen]);
+  }, [isOpen, prefersReduced]);
 
   const goNext = useCallback(() => {
     if (!currentItem) return;
@@ -104,24 +107,32 @@ export default function StoriesOverlay({
   return (
     <Overlay onClick={onClose} aria-label="Story overlay">
       <StoryShell onClick={(e) => e.stopPropagation()}>
-        <ProgressRow>
-          {currentItem.slides.map((_, i) => (
-            <Track key={i} aria-label={`Progress track ${i + 1}`}>
-              <Fill style={{ width: `${getProgress(i) * 100}%` }} />
-            </Track>
-          ))}
-        </ProgressRow>
-
-        <Header>
-          <HeaderAvatar src={currentItem.img} alt={currentItem.name} />
-          <HeaderText>
-            <HeaderTitle>{currentItem.name}</HeaderTitle>
-            <HeaderSub>Chapter highlight</HeaderSub>
-          </HeaderText>
-          <CloseBtn aria-label="Close story" onClick={onClose}><VscEyeClosed /></CloseBtn>
-        </Header>
-
         <Slides>
+          {/* Progress bar inside the slide area so it matches image width */}
+          <ProgressRow aria-label="Story progress">
+            {currentItem.slides.map((_, i) => (
+              <Track key={i} aria-label={`Progress track ${i + 1}`}>
+                <Fill style={{ width: `${getProgress(i) * 100}%` }} />
+              </Track>
+            ))}
+          </ProgressRow>
+
+          {/* Header attached to image */}
+          <Header>
+            <HeaderAvatar src={currentItem.img} alt={currentItem.name} />
+            <HeaderText>
+              <HeaderTitle>{currentItem.name}</HeaderTitle>
+              <HeaderSub>Chapter highlight</HeaderSub>
+            </HeaderText>
+            <CloseBtn
+              aria-label="Close story"
+              onClick={onClose}
+              title="Close"
+            >
+              <VscEyeClosed />
+            </CloseBtn>
+          </Header>
+
           {currentItem.slides.map((src, i) => (
             <SlideImg
               key={i}
@@ -132,6 +143,7 @@ export default function StoriesOverlay({
             />
           ))}
 
+          {/* Tap zones for prev/next */}
           <TapZone $side="left" onClick={goPrev} aria-label="Previous slide" />
           <TapZone $side="right" onClick={goNext} aria-label="Next slide" />
         </Slides>
