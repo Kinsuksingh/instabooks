@@ -7,7 +7,7 @@ export default function BottomNav() {
   const navItems = [
     ["/instabooks/", <FiHome />],
     ["/instabooks/search", <FiSearch />],
-    ["/instabooks/add", <FiPlusSquare />],
+    ["/instabooks/create", <FiPlusSquare />],
     ["/instabooks/library", <FiBookOpen />],
     ["/instabooks/profile", <FiUser />],
   ];

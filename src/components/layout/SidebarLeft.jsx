@@ -130,10 +130,9 @@ export default function InstagramSidebar() {
   const links = [
     { to: "/instabooks/", icon: <FiHome />, label: "Home" },
     { to: "/instabooks/search", icon: <FiSearch />, label: "Search" },
-    { to: "/instabooks/explore", icon: <FiPlusSquare />, label: "Explore" },
-    { to: "/instabooks/messages", icon: <FiBookOpen />, label: "Messages", hasNotification: true },
-    { to: "/instabooks/notifications", icon: <FiHeart />, label: "Notifications" },
     { to: "/instabooks/create", icon: <FiPlusSquare />, label: "Create" },
+    { to: "/instabooks/library", icon: <FiBookOpen />, label: "Library", hasNotification: true },
+    { to: "/instabooks/notifications", icon: <FiHeart />, label: "Notifications" },
     { to: "/instabooks/profile", icon: <FiUser />, label: "Profile" },
   ];
 
