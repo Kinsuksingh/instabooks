@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import InfographicCard from "../components/cards/InfographicCard";
 import { storiesData } from "../data/storiesData";
@@ -22,6 +23,9 @@ const DemoGrid = styled.div`
 `;
 
 export default function Feed() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
   return (
     <>
       {/* Story strip + overlay now handled by Stories */}

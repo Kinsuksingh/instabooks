@@ -4,6 +4,24 @@ import styled from "styled-components";
 import { BookOpen, GraduationCap, CheckCircle, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+
+const DemoGrid = styled.div`
+  min-height: 100vh;
+  place-items: center;
+  padding: 15px;
+  background: radial-gradient(
+      40% 60% at 20% 10%,
+      rgba(99, 102, 241, 0.18) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      40% 60% at 80% 0%,
+      rgba(56, 189, 248, 0.18) 0%,
+      transparent 60%
+    ),
+    #f8fafc;
+`;
+
 /* ------- Shared UI ------- */
 const Title = styled.h1`
   color: #1a202c;
@@ -202,7 +220,7 @@ function Profile() {
   };
 
   return (
-    <>
+    <DemoGrid>
       <Title>Choose Your Favorite Teacher</Title>
       <Subtitle>Select a teacher to access their complete library</Subtitle>
 
@@ -271,7 +289,7 @@ function Profile() {
           </PrimaryButton>
         </Footer>
       </SelectionCard>
-    </>
+    </DemoGrid>
   );
 }
 

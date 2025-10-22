@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Feed from "./pages/Feed.jsx";
 import InstabookApp from "./pages/Home.jsx";
 import Profile from "./pages/Profile.jsx";
+import SnakeTimeline from "./pages/SnakeTimeline.jsx";
 import Topbar from "./components/layout/Topbar.jsx";
 import SidebarLeft from "./components/layout/SidebarLeft.jsx";
 import SidebarRight from "./components/layout/SidebarRight.jsx";
@@ -190,8 +191,10 @@ export default function App() {
 
           <Routes>
             <Route path="/instabooks" element={<InstabookApp />} />
-            <Route path="/instabooks/profile" element={<Profile />} />
+            <Route path="/instabooks/search" element={<SnakeTimeline />} />
+            <Route path="/instabooks/create" element={<SnakeTimeline />} />
             <Route path="/instabooks/library" element={<Feed />} />
+            <Route path="/instabooks/profile" element={<Profile />} />
           </Routes>
         </MainContent>
 
