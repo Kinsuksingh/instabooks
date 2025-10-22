@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Feed from "./pages/Feed.jsx";
+import InstabookApp from "./pages/Home.jsx";
+import Profile from "./pages/Profile.jsx";
 import Topbar from "./components/layout/Topbar.jsx";
 import SidebarLeft from "./components/layout/SidebarLeft.jsx";
 import SidebarRight from "./components/layout/SidebarRight.jsx";
@@ -187,7 +189,9 @@ export default function App() {
           </MobileTopbar>
 
           <Routes>
-            <Route path="/instabooks/" element={<Feed />} />
+            <Route path="/instabooks" element={<InstabookApp />} />
+            <Route path="/instabooks/profile" element={<Profile />} />
+            <Route path="/instabooks/library" element={<Feed />} />
           </Routes>
         </MainContent>
 
