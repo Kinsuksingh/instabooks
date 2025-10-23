@@ -9,6 +9,7 @@ import Topbar from "./components/layout/Topbar.jsx";
 import SidebarLeft from "./components/layout/SidebarLeft.jsx";
 import SidebarRight from "./components/layout/SidebarRight.jsx";
 import BottomNav from "./components/layout/BottomNav.jsx";
+import DataGatheringPage from "./pages/DataGatheringPage.jsx";
 
 // Styled Components
 const AppWrapper = styled.div`
@@ -192,7 +193,7 @@ export default function App() {
           <Routes>
             <Route path="/instabooks" element={<InstabookApp />} />
             <Route path="/instabooks/search" element={<ComingSoon />} />
-            <Route path="/instabooks/create" element={<ComingSoon />} />
+            <Route path="/instabooks/create" element={<DataGatheringPage />} />
             <Route path="/instabooks/library" element={<Feed />} />
             <Route path="/instabooks/notifications" element={<ComingSoon />} />
             <Route path="/instabooks/profile" element={<Profile />} />

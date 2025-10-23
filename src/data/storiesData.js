@@ -60,3 +60,17 @@ export const storiesData = [
     ],
   },
 ];
+
+
+
+// Function to append new story
+export const appendStory = (newStory) => {
+  const newId = storiesData.length
+    ? Math.max(...storiesData.map((s) => s.id)) + 1
+    : 1;
+
+  const storyToAdd = { id: newId, ...newStory };
+  storiesData.push(storyToAdd);
+
+  return storyToAdd;
+};

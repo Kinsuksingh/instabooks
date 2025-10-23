@@ -207,10 +207,6 @@ function Profile() {
   const libraries = [
     { id: 1, title: "Algebra Fundamentals", type: "Revision Notes" },
     { id: 2, title: "Calculus Advanced", type: "Detailed Notes" },
-    { id: 3, title: "Geometry Basics", type: "Revision Notes" },
-    { id: 4, title: "Trigonometry Guide", type: "Detailed Notes" },
-    { id: 5, title: "Statistics Overview", type: "Revision Notes" },
-    { id: 6, title: "Linear Equations", type: "Detailed Notes" },
   ];
 
   const goToLibrary = () => {
