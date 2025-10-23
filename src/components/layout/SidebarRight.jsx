@@ -1,203 +1,417 @@
-import styled from 'styled-components';
-import { MoreHorizontal } from 'lucide-react';
 
-const SidebarContainer = styled.aside`
-  width: 320px;
-  padding: 24px 0;
-  position: sticky;
-  top: 20px;
-  transition: width 200ms ease, padding 200ms ease;
+import styled from 'styled-components';
+import { FiExternalLink, FiZap, FiTrendingUp, FiStar, FiAward, FiInfo } from 'react-icons/fi';
+
+const SidebarContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 24px 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 200ms ease;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: #c0c0c0;
+  }
 `;
 
 const ProfileSection = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 16px;
-  margin-bottom: 24px;
-  transition: padding 200ms ease, gap 200ms ease;
+  position: relative;
+  margin-bottom: 32px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    border-radius: 20px;
+    opacity: 0.15;
+    filter: blur(8px);
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover::before {
+    opacity: 0.25;
+  }
 `;
 
-const ProfileAvatar = styled.img`
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid #e0e0e0;
+const ProfileCard = styled.div`
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: ${props => props.$width < 250 ? '12px' : '20px'};
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: ${props => props.$width < 250 ? '8px' : '16px'};
   cursor: pointer;
-  flex-shrink: 0; /* keep crisp */
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const AvatarWrapper = styled.div`
+  position: relative;
+  flex-shrink: 0;
+`;
+
+const Avatar = styled.div`
+  width: ${props => props.$width < 250 ? '40px' : props.$width < 200 ? '36px' : '56px'};
+  height: ${props => props.$width < 250 ? '40px' : props.$width < 200 ? '36px' : '56px'};
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: ${props => props.$width < 250 ? '16px' : props.$width < 200 ? '14px' : '24px'};
+  font-weight: 600;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+  
+  ${ProfileCard}:hover & {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  }
+`;
+
+const StatusDot = styled.div`
+  position: absolute;
+  bottom: ${props => props.$width < 250 ? '2px' : '4px'};
+  right: ${props => props.$width < 250 ? '0' : '2px'};
+  width: ${props => props.$width < 250 ? '10px' : props.$width < 200 ? '8px' : '14px'};
+  height: ${props => props.$width < 250 ? '10px' : props.$width < 200 ? '8px' : '14px'};
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
 `;
 
 const ProfileInfo = styled.div`
   flex: 1;
+  min-width: 0;
+  display: ${props => props.$width < 180 ? 'none' : 'block'};
 `;
 
-const ProfileUsername = styled.div`
-  font-size: 14px;
+const Username = styled.div`
+  font-size: ${props => props.$width < 250 ? '13px' : '14px'};
   font-weight: 600;
-  color: #262626;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.7;
-  }
-`;
-
-const ProfileName = styled.div`
-  font-size: 14px;
-  color: #8e8e8e;
-  margin-top: 2px;
-`;
-
-const SwitchButton = styled.button`
-  background: none;
-  border: none;
-  color: #0095f6;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+`;
 
-  &:hover {
-    color: #00376b;
-  }
+const Name = styled.div`
+  font-size: ${props => props.$width < 250 ? '11px' : '13px'};
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const SectionHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-  margin-bottom: 12px;
-  transition: padding 200ms ease, margin 200ms ease;
+  justify-content: space-between;
+  margin-bottom: 16px;
 `;
 
 const SectionTitle = styled.div`
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: ${props => props.$width < 200 ? '4px' : '8px'};
+  font-size: ${props => props.$width < 250 ? '12px' : '13px'};
   font-weight: 600;
-  color: #8e8e8e;
+  color: #1a1a1a;
+  
+  svg {
+    color: ${props => props.$iconColor || '#667eea'};
+    flex-shrink: 0;
+    width: ${props => props.$width < 200 ? '14px' : '16px'};
+    height: ${props => props.$width < 200 ? '14px' : '16px'};
+  }
+  
+  span {
+    display: ${props => props.$width < 180 ? 'none' : 'inline'};
+  }
 `;
 
 const SeeAllButton = styled.button`
   background: none;
   border: none;
-  color: #262626;
-  font-size: 12px;
+  color: #667eea;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: ${props => props.$width < 180 ? 'none' : 'block'};
+  
   &:hover {
-    color: #8e8e8e;
+    background: #f0f0ff;
+    color: #5568d3;
   }
-
 `;
 
-const SuggestionsList = styled.div`
+const CardList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  transition: gap 200ms ease;
-
+  gap: ${props => props.$width < 250 ? '8px' : '12px'};
+  margin-bottom: 32px;
 `;
 
-const SuggestionCard = styled.div`
+const Card = styled.div`
+  position: relative;
+  background: ${props => props.$gradient ? 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)' : '#fafafa'};
+  border-radius: ${props => props.$width < 250 ? '10px' : '14px'};
+  padding: ${props => props.$width < 250 ? '10px' : '14px'};
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: ${props => props.$glowColor || 'linear-gradient(135deg, #667eea, #764ba2)'};
+    border-radius: ${props => props.$width < 250 ? '11px' : '15px'};
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+    
+    &::before {
+      opacity: 0.2;
+    }
+  }
+`;
+
+const CardIcon = styled.div`
+  width: ${props => {
+    if (props.$width < 200) return '100%';
+    return props.$width < 250 ? '50px' : '100%';
+  }};
+  height: ${props => {
+    if (props.$width < 200) return '80px';
+    return props.$width < 250 ? '50px' : '100px';
+  }};
+  border-radius: ${props => props.$width < 250 ? '8px' : '10px'};
+  background: ${props => props.$gradient || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'};
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: padding 200ms ease, gap 200ms ease, background-color 150ms ease;
-
-  &:hover {
-    background: #fafafa;
-  }
-`;
-
-const SuggestionAvatar = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-  flex-shrink: 0; /* keep crisp */
-`;
-
-const SuggestionInfo = styled.div`
-  flex: 1;
-  cursor: pointer;
-
+  justify-content: center;
+  margin-bottom: ${props => props.$width >= 250 || props.$width < 200 ? '12px' : '0'};
+  margin-right: ${props => props.$width >= 200 && props.$width < 250 ? '12px' : '0'};
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
   
-`;
-
-const SuggestionUsername = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: #262626;
-`;
-
-const SuggestionSubtext = styled.div`
-  font-size: 12px;
-  color: #8e8e8e;
-`;
-
-const FollowButton = styled.button`
-  background: none;
-  border: none;
-  color: #0095f6;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-
-  &:hover {
-    color: #00376b;
+  svg {
+    width: ${props => {
+      if (props.$width < 200) return '28px';
+      return props.$width < 250 ? '24px' : '40px';
+    }};
+    height: ${props => {
+      if (props.$width < 200) return '28px';
+      return props.$width < 250 ? '24px' : '40px';
+    }};
+    color: white;
+  }
+  
+  ${Card}:hover & {
+    transform: scale(1.05) rotate(5deg);
   }
 `;
 
+const CardContent = styled.div`
+  display: flex;
+  flex-direction: ${props => {
+    if (props.$width < 200) return 'column';
+    return props.$width < 250 ? 'row' : 'column';
+  }};
+  align-items: ${props => props.$width >= 200 && props.$width < 250 ? 'center' : 'stretch'};
+  flex: 1;
+`;
 
+const CardBody = styled.div`
+  flex: 1;
+`;
 
+const CardTitle = styled.h4`
+  font-size: ${props => props.$width < 250 ? '12px' : '13px'};
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 ${props => props.$width < 250 ? '2px' : '4px'} 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
 
-const suggestions = [
-  { username: 'natgeo', subtext: 'Followed by alex + 12 more', seed: 'natgeo' },
-  { username: 'nasa', subtext: 'Followed by sarah + 8 more', seed: 'nasa' },
-  { username: 'bbcearth', subtext: 'Followed by mike + 5 more', seed: 'bbcearth' },
-  { username: 'photography', subtext: 'Followed by emma + 15 more', seed: 'photography' },
-  { username: 'books', subtext: 'Followed by james + 20 more', seed: 'books' },
-];
+const CardDescription = styled.p`
+  font-size: ${props => props.$width < 250 ? '10px' : '12px'};
+  color: #6b7280;
+  margin: 0;
+  display: ${props => props.$width < 180 ? 'none' : '-webkit-box'};
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+`;
 
-export default function InstagramSidebar() {
+const Badge = styled.span`
+  display: ${props => props.$width < 180 ? 'none' : 'inline-flex'};
+  align-items: center;
+  gap: 4px;
+  padding: ${props => props.$width < 250 ? '2px 6px' : '4px 10px'};
+  background: ${props => props.$bg || 'linear-gradient(135deg, #667eea, #764ba2)'};
+  color: white;
+  font-size: ${props => props.$width < 250 ? '9px' : '10px'};
+  font-weight: 600;
+  border-radius: 6px;
+  margin-bottom: ${props => props.$width < 250 ? '4px' : '8px'};
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+`;
+
+const Link = styled.a`
+  display: ${props => props.$width < 180 ? 'none' : 'inline-flex'};
+  align-items: center;
+  gap: 6px;
+  font-size: ${props => props.$width < 250 ? '10px' : '11px'};
+  color: #667eea;
+  font-weight: 600;
+  margin-top: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  
+  svg {
+    transition: transform 0.2s ease;
+  }
+  
+  &:hover {
+    color: #5568d3;
+    
+    svg {
+      transform: translate(2px, -2px);
+    }
+  }
+`;
+
+const ProductSidebar = ({ sidebarWidth = 360 }) => {
+
+  const profile = {
+    username: 'demo_user',
+    name: 'Demo User',
+    initials: 'DU',
+  };
+
+  const infos = [
+    {
+      icon: FiZap,
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      title: 'New Feature: Dark Mode',
+      description: 'Enable dark mode for a better night-time experience.',
+      badge: 'New',
+      badgeBg: 'linear-gradient(135deg, #667eea, #764ba2)',
+    },
+    {
+      icon: FiStar,
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      title: 'Product Tip: Quick Search',
+      description: 'Use the search bar to find items faster.',
+      badge: 'Tip',
+      badgeBg: 'linear-gradient(135deg, #f093fb, #f5576c)',
+    },
+    {
+      icon: FiAward,
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      title: 'Update: Version 2.0',
+      description: 'Check out the latest improvements and bug fixes.',
+      badge: 'Update',
+      badgeBg: 'linear-gradient(135deg, #4facfe, #00f2fe)',
+    },
+  ];
+
   return (
     <SidebarContainer>
+      {/* Profile */}
       <ProfileSection>
-        <ProfileAvatar
-          src="https://api.dicebear.com/9.x/initials/svg?seed=YourProfile"
-          alt="Your profile"
-        />
-        <ProfileInfo>
-          <ProfileUsername>your_username</ProfileUsername>
-          <ProfileName>Your Full Name</ProfileName>
-        </ProfileInfo>
-        <SwitchButton>Switch</SwitchButton>
+        <ProfileCard $width={sidebarWidth}>
+          <AvatarWrapper>
+            <Avatar $width={sidebarWidth}>{profile.initials}</Avatar>
+            <StatusDot $width={sidebarWidth} />
+          </AvatarWrapper>
+          <ProfileInfo $width={sidebarWidth}>
+            <Username $width={sidebarWidth}>{profile.username}</Username>
+            <Name $width={sidebarWidth}>{profile.name}</Name>
+          </ProfileInfo>
+        </ProfileCard>
       </ProfileSection>
 
+      {/* Product Highlights */}
       <SectionHeader>
-        <SectionTitle>Suggestions For You</SectionTitle>
-        <SeeAllButton>See All</SeeAllButton>
+        <SectionTitle $width={sidebarWidth} $iconColor="#667eea">
+          <FiZap />
+          <span>Highlights</span>
+        </SectionTitle>
+        <SeeAllButton $width={sidebarWidth}>See All</SeeAllButton>
       </SectionHeader>
-
-      <SuggestionsList>
-        {suggestions.map((user) => (
-          <SuggestionCard key={user.username}>
-            <SuggestionAvatar
-              src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.seed}`}
-              alt={user.username}
-            />
-            <SuggestionInfo>
-              <SuggestionUsername>{user.username}</SuggestionUsername>
-              <SuggestionSubtext>{user.subtext}</SuggestionSubtext>
-            </SuggestionInfo>
-            <FollowButton>Follow</FollowButton>
-          </SuggestionCard>
-        ))}
-      </SuggestionsList>
+      
+      <CardList $width={sidebarWidth}>
+        {infos.map((info, idx) => {
+          const IconComponent = info.icon;
+          return (
+            <Card
+              key={idx}
+              $width={sidebarWidth}
+              $glowColor={info.gradient}
+            >
+              <Badge $width={sidebarWidth} $bg={info.badgeBg}>
+                {info.badge}
+              </Badge>
+              <CardContent $width={sidebarWidth}>
+                <CardIcon $width={sidebarWidth} $gradient={info.gradient}>
+                  <IconComponent />
+                </CardIcon>
+                <CardBody>
+                  <CardTitle $width={sidebarWidth}>{info.title}</CardTitle>
+                  <CardDescription $width={sidebarWidth}>
+                    {info.description}
+                  </CardDescription>
+                </CardBody>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </CardList>
     </SidebarContainer>
   );
-}
+};
+
+export default ProductSidebar;

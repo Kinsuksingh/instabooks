@@ -1,292 +1,261 @@
-// Profile.jsx
-import React, { useState } from "react";
-import styled from "styled-components";
-import { BookOpen, GraduationCap, CheckCircle, ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { FaUserTie, FaUserGraduate, FaChalkboardTeacher, FaChevronDown } from 'react-icons/fa';
 
-
-const DemoGrid = styled.div`
-  min-height: 100vh;
-  place-items: center;
-  padding: 15px;
-  background: radial-gradient(
-      40% 60% at 20% 10%,
-      rgba(99, 102, 241, 0.18) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      40% 60% at 80% 0%,
-      rgba(56, 189, 248, 0.18) 0%,
-      transparent 60%
-    ),
-    #f8fafc;
+// Animations
+const float = keyframes`
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px,-30px) scale(1.1); }
+  66% { transform: translate(-20px,20px) scale(0.9); }
 `;
 
-/* ------- Shared UI ------- */
+const slideUp = keyframes`
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+const bounce = keyframes`
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+`;
+
+const progress = keyframes`
+  0% { width:0%; }
+  50% { width:70%; }
+  100% { width:0%; }
+`;
+
+// Styled components
+const Wrapper = styled.div`
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+`;
+
+const BackgroundAnimation = styled.div`
+  position:absolute;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+`;
+
+const Circle = styled.div`
+  position:absolute;
+  border-radius:50%;
+  background: rgba(255,255,255,0.1);
+  animation: ${float} 20s infinite ease-in-out;
+  &:nth-child(1) { width:300px;height:300px;top:10%;left:10%; animation-delay:0s; }
+  &:nth-child(2) { width:200px;height:200px;top:60%;right:15%; animation-delay:3s; }
+  &:nth-child(3) { width:150px;height:150px;bottom:20%;left:20%; animation-delay:6s; }
+`;
+
+const Container = styled.div`
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:40px;
+  background: rgba(255,255,255,0.95);
+  border-radius:10px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  max-width:500px;
+  animation: ${slideUp} 0.8s ease-out;
+
+  @media(max-width:600px){ margin:20px; padding:20px; }
+`;
+
+const IconContainer = styled.div` margin-bottom:20px; `;
+const ConstructionIcon = styled.div`
+  font-size:70px;
+  border-radius:50%;
+  width:100px;height:100px;
+  margin:0 auto;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:bold;
+  animation: ${bounce} 2s infinite;
+`;
+
 const Title = styled.h1`
-  color: #1a202c;
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin: 0 0 0.5rem;
+  font-size:2.5em;
+  color:#2d3748;
+  margin-bottom:10px;
+  font-weight:700;
+  @media(max-width:600px){ font-size:2em; }
 `;
+
 const Subtitle = styled.p`
-  color: #4a5568;
-  font-size: 1rem;
-  text-align: center;
-  margin: 0 0 2rem;
-`;
-const SelectionCard = styled.div`
-  background: white;
-  border-radius: 16px;
-  padding: 1.75rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-`;
-const SectionTitle = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-`;
-const CheckIcon = styled.div`
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  color: white;
+  font-size:1.2em;
+  color:#718096;
+  margin-bottom:25px;
+  line-height:1.6;
 `;
 
-/* ------- Teacher Cards ------- */
-const TeacherCard = styled.button`
-  background: ${(p) =>
-    p.$selected
-      ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-      : "white"};
-  border: 2px solid ${(p) => (p.$selected ? "#667eea" : "#e2e8f0")};
-  border-radius: 16px;
-  padding: 1.25rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+const ProgressContainer = styled.div`
+  width:100%;
+  height:8px;
+  background:#e2e8f0;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:20px;
+`;
+
+const ProgressBar = styled.div`
+  height:100%;
+  background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);
+  border-radius:10px;
+  animation: ${progress} 3s ease-in-out infinite;
+`;
+
+// Custom dropdown styles
+const DropdownContainer = styled.div`
   position: relative;
-  text-align: left;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-  }
-`;
-const Avatar = styled.div`
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: ${(p) =>
-    p.$selected
-      ? "white"
-      : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  color: ${(p) => (p.$selected ? "#667eea" : "white")};
-  font-weight: 700;
-`;
-const TeacherInfo = styled.div`
-  flex: 1;
-`;
-const TeacherName = styled.h3`
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: ${(p) => (p.$selected ? "white" : "#1a202c")};
-  margin: 0 0 0.25rem;
-`;
-const TeacherSubject = styled.p`
-  font-size: 0.9rem;
-  color: ${(p) => (p.$selected ? "rgba(255,255,255,0.9)" : "#718096")};
-  margin: 0;
+  width: 100%;
+  margin-bottom: 25px;
 `;
 
-/* ------- Library Preview ------- */
-const LibrarySection = styled.div`
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 2px solid #e2e8f0;
-`;
-const LibraryGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 0.9rem;
-`;
-const BookCard = styled.div`
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.08) 0%,
-    rgba(118, 75, 162, 0.08) 100%
-  );
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-`;
-const BookTitle = styled.h4`
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin: 0.5rem 0 0.25rem;
-`;
-const BookType = styled.span`
-  font-size: 0.8rem;
-  color: #667eea;
-  font-weight: 500;
-`;
-
-/* ------- Footer Actions ------- */
-const Footer = styled.div`
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-  flex-wrap: wrap;
-`;
-const GhostButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: transparent;
-  border: 1px solid #e2e8f0;
-  color: #4a5568;
+const DropdownHeader = styled.div`
+  background: #fff;
   border-radius: 10px;
-  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+  font-size: 16px;
   cursor: pointer;
-`;
-const PrimaryButton = styled.button`
-  display: inline-flex;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 0.85rem 1.25rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  min-width: 170px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  &:not(:disabled):hover {
-    transform: translateY(-2px);
-  }
+  &:hover { border-color: #667eea; }
 `;
 
-function Profile() {
+const DropdownList = styled.ul`
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+  z-index: 10;
+`;
+
+const DropdownItem = styled.li`
+  padding: 10px 20px;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  cursor:pointer;
+  transition: background 0.2s;
+
+  &:hover { background: #f0f4ff; }
+`;
+
+const NotifyButton = styled.button`
+  margin-top:10px;
+  padding:15px 40px;
+  font-size:16px;
+  font-weight:600;
+  color:white;
+  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+
+  &:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.6); }
+  &:active { transform: translateY(0); }
+  &:disabled { opacity:0.6; cursor:not-allowed; }
+`;
+
+export default function ComingSoon() {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
 
   const teachers = [
-    { id: 1, name: "Dr. Sarah Johnson", subject: "Mathematics & Physics", initial: "SJ" },
-    { id: 2, name: "Prof. Michael Chen", subject: "Chemistry & Biology", initial: "MC" },
-    { id: 3, name: "Ms. Emily Roberts", subject: "English & Literature", initial: "ER" },
-    { id: 4, name: "Mr. David Kumar", subject: "History & Geography", initial: "DK" },
+    { name: "Prof. Michael Chen", icon: <FaUserTie /> },
+    { name: "Dr. Sarah Johnson", icon: <FaUserGraduate /> },
+    { name: "Mr. David Kumar", icon: <FaChalkboardTeacher /> },
   ];
 
-  const libraries = [
-    { id: 1, title: "Algebra Fundamentals", type: "Revision Notes" },
-    { id: 2, title: "Calculus Advanced", type: "Detailed Notes" },
-  ];
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const selectTeacher = (teacher) => {
+    setSelectedTeacher(teacher);
+    setIsOpen(false);
+  };
 
   const goToLibrary = () => {
-    if (!selectedTeacher) return;
-    // Pass the teacher to /library page
-    navigate("/instabooks/library", { state: { teacher: selectedTeacher } });
+    if (selectedTeacher) {
+      navigate('/instabooks/library');
+    }
   };
 
   return (
-    <DemoGrid>
-      <Title>Choose Your Favorite Teacher</Title>
-      <Subtitle>Select a teacher to access their complete library</Subtitle>
+    <Wrapper>
+      <BackgroundAnimation>
+        <Circle />
+        <Circle />
+        <Circle />
+      </BackgroundAnimation>
 
-      <SelectionCard>
-        <SectionTitle>
-          <GraduationCap size={22} />
-          Available Teachers
-        </SectionTitle>
+      <Container>
+        <IconContainer>
+          <ConstructionIcon>🎓</ConstructionIcon>
+        </IconContainer>
 
-        <GridContainer>
-          {teachers.map((t) => {
-            const isSel = selectedTeacher?.id === t.id;
-            return (
-              <TeacherCard
-                key={t.id}
-                type="button"
-                $selected={isSel}
-                onClick={() => setSelectedTeacher(t)}
-              >
-                {isSel && (
-                  <CheckIcon>
-                    <CheckCircle size={18} />
-                  </CheckIcon>
-                )}
-                <Avatar $selected={isSel}>{t.initial}</Avatar>
-                <TeacherInfo>
-                  <TeacherName $selected={isSel}>{t.name}</TeacherName>
-                  <TeacherSubject $selected={isSel}>{t.subject}</TeacherSubject>
-                </TeacherInfo>
-              </TeacherCard>
-            );
-          })}
-        </GridContainer>
+        <Title>Choose Your Favorite Teacher</Title>
+        <Subtitle>Select a teacher to access their complete library</Subtitle>
 
-        {selectedTeacher && (
-          <LibrarySection>
-            <SectionTitle>
-              <BookOpen size={22} />
-              {selectedTeacher.name}&apos;s Library (preview)
-            </SectionTitle>
-            <LibraryGrid>
-              {libraries.map((b) => (
-                <BookCard key={b.id}>
-                  <BookOpen size={28} />
-                  <BookTitle>{b.title}</BookTitle>
-                  <BookType>{b.type}</BookType>
-                </BookCard>
+        <ProgressContainer>
+          <ProgressBar />
+        </ProgressContainer>
+
+        {/* Enhanced Dropdown */}
+        <DropdownContainer>
+          <DropdownHeader onClick={toggleDropdown}>
+            {selectedTeacher ? (
+              <div style={{display:'flex', alignItems:'center', gap:'10px'}}>
+                {selectedTeacher.icon} {selectedTeacher.name}
+              </div>
+            ) : "Select Teacher"}
+            <FaChevronDown />
+          </DropdownHeader>
+          {isOpen && (
+            <DropdownList>
+              {teachers.map((teacher, index) => (
+                <DropdownItem key={index} onClick={() => selectTeacher(teacher)}>
+                  {teacher.icon} {teacher.name}
+                </DropdownItem>
               ))}
-            </LibraryGrid>
-          </LibrarySection>
-        )}
+            </DropdownList>
+          )}
+        </DropdownContainer>
 
-        <Footer>
-          <GhostButton type="button" onClick={() => navigate(-1)}>
-            <ArrowLeft size={18} />
-            Back
-          </GhostButton>
-
-          <PrimaryButton
-            type="button"
-            onClick={goToLibrary}
-            disabled={!selectedTeacher}
-            aria-disabled={!selectedTeacher}
-          >
-            Go to Library
-          </PrimaryButton>
-        </Footer>
-      </SelectionCard>
-    </DemoGrid>
+        <NotifyButton onClick={goToLibrary} disabled={!selectedTeacher}>
+          Go to Library
+        </NotifyButton>
+      </Container>
+    </Wrapper>
   );
 }
 
-export default Profile;
+
+
+
+
+
+
