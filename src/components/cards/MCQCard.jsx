@@ -7,66 +7,87 @@ const Card = styled.article`
   grid-template-rows: auto 1fr;
   width: 100%;
   max-width: 800px;
-  border-radius: 10px;
+  border-radius: 16px;
   overflow: hidden;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0.6) 100%
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.75) 100%
   );
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   }
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+
+  ${Card}:hover & {
+    transform: scale(1.05);
+  }
 `;
 
 const Content = styled.div`
-  padding: 16px;
+  padding: 20px 24px;
 `;
 
 const Title = styled.h2`
-  font-size: 1.4rem;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1f2937;
 `;
 
 const QuestionText = styled.p`
   font-size: 1rem;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  color: #374151;
+  line-height: 1.5;
 `;
 
-const Option = styled.button`
+const Option = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== "selected" && prop !== "correct"
+})`
   display: block;
   width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 12px;
   border: 1px solid #ddd;
   background: ${({ selected, correct }) =>
-    selected ? (correct ? "#d4edda" : "#f8d7da") : "#f9f9f9"};
+    selected
+      ? correct
+        ? "linear-gradient(90deg, #a3e635, #4ade80)" // green gradient
+        : "linear-gradient(90deg, #f87171, #ef4444)" // red gradient
+      : "#f3f4f6"};
+  color: ${({ selected }) => (selected ? "#fff" : "#111827")};
+  font-weight: 500;
   cursor: pointer;
   text-align: left;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: ${({ selected }) =>
+    selected ? "0 4px 12px rgba(0,0,0,0.15)" : "none"};
 
   &:hover {
-    background: #e9ecef;
+    background: ${({ selected }) =>
+      selected ? "" : "linear-gradient(90deg, #e5e7eb, #d1d5db)"};
   }
 `;
+
 
 const MCQCard = ({ mcq }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelect = (option) => {
-    setSelectedOption(option);
+    if (!selectedOption) setSelectedOption(option);
   };
 
   return (

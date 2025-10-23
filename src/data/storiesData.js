@@ -1,11 +1,14 @@
+import { images, testimg } from "../assets/exportImg.js";
+
+
 export const storiesData = [
   {
     id: 1,
     name: "Nutrition",
-    img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=400&fit=crop",
+    img: images.Nutrition,
     hasNew: true,
     slides: [
-      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&h=1400&fit=crop",
+      testimg.test,
       "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=1400&fit=crop",
       "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&h=1400&fit=crop",
       "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=1400&fit=crop",
@@ -14,7 +17,7 @@ export const storiesData = [
   {
     id: 2,
     name: "Respiration",
-    img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=400&fit=crop",
+    img: images.Respiration,
     hasNew: true,
     slides: [
       "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=1400&fit=crop",
@@ -26,7 +29,7 @@ export const storiesData = [
   {
     id: 3,
     name: "Transportation",
-    img: "https://images.unsplash.com/photo-1530213786676-41ad9f7736f6?w=400&h=400&fit=crop",
+    img: images.Transportation,
     hasNew: true,
     slides: [
       "https://images.unsplash.com/photo-1530213786676-41ad9f7736f6?w=800&h=1400&fit=crop",
@@ -38,7 +41,7 @@ export const storiesData = [
   {
     id: 4,
     name: "Excretion",
-    img: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=400&fit=crop",
+    img: images.Excreation,
     hasNew: true,
     slides: [
       "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=1400&fit=crop",

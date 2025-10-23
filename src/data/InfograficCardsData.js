@@ -1,44 +1,91 @@
+import { nutritionSlides } from "../assets/exportImg.js";
+
 // InfograficCardsData.js
 export const InfograficCardsData = [
   {
     id: 1,
     type: "infografic",
-    title: "2025 Internet Usage Snapshot",
-    description: "Daily active users, average screen time, and platform mix.",
-    imgSrc:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop",
+    title: "Introduction to Nutrition",
+    description: "Basics of nutrition and its importance",
+    imgSrc: nutritionSlides.Slide1,
   },
   {
     id: 2,
     type: "infografic",
-    title: "AI Growth Report 2025",
-    description: "Where AI adoption is accelerating the fastest.",
-    imgSrc:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
+    title: "Autotrophic Nutrition process",
+    description: "Steps involved in autotrophic nutrition",
+    imgSrc: nutritionSlides.Slide2,
   },
   {
     id: 3,
     type: "infografic",
-    title: "Cybersecurity Basics",
-    description: "Top habits that cut risk by 80%.",
-    imgSrc:
-      "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?q=80&w=1600&auto=format&fit=crop",
+    title: "Photosynthesis Overview",
+    description: "Photosynthesis and its steps",
+    imgSrc: nutritionSlides.Slide3,
   },
   {
     id: 4,
-    type: "question",
-    title: "Cybersecurity Basics",
-    description:
-      "Which of the following habits can significantly reduce your cybersecurity risk by up to 80%?",
-    options: [
-      "Using strong, unique passwords for each account",
-      "Clicking on unknown links in emails",
-      "Sharing passwords with colleagues",
-      "Ignoring software updates",
-    ],
-    correctAnswer: "Using strong, unique passwords for each account",
-    imgSrc:
-      "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?q=80&w=1600&auto=format&fit=crop",
+    type: "infografic",
+    title: "Heterotrophic Nutrition",
+    description: "Heterotrophic mode of nutrition",
+    imgSrc: nutritionSlides.Slide4,
+  },
+  {
+    id: 5,
+    type: "infografic",
+    title: "Human Digestive System",
+    description: "Human digestive system overview",
+    imgSrc: nutritionSlides.Slide5,
+  },
+  {
+    id: 6,
+    type: "infografic",
+    title: "Digestive Organs Functions",
+    description: "Functions of digestive organs",
+    imgSrc: nutritionSlides.Slide6,
+  },
+  {
+    id: 7,
+    type: "infografic",
+    title: "Enzymes in Digestion",
+    description: "Role of enzymes in digestion",
+    imgSrc: nutritionSlides.Slide7,
+  },
+  {
+    id: 8,
+    type: "infografic",
+    title: "Absorption and Assimilation",
+    description: "Absorption and assimilation",
+    imgSrc: nutritionSlides.Slide8,
+  },
+  {
+    id: 9,
+    type: "infografic",
+    title: "Egestion process",
+    description: "Egestion process",
+    imgSrc: nutritionSlides.Slide9,
+  },
+  {
+    id: 10,
+    type: "infografic",
+    title: "Nutrition - Summary",
+    description: "Summary of the Nutrition chapter",
+    imgSrc: nutritionSlides.Slide10,
+  },
+  {
+    id: 11,
+  type: "question",
+  title: "Nutrition Basics",
+  description:
+    "Which of the following is an example of heterotrophic nutrition?",
+  options: [
+    "Photosynthesis in plants",
+    "Eating a fruit salad",
+    "Making food from sunlight",
+    "Autotrophic bacteria producing their own food",
+  ],
+  correctAnswer: "Eating a fruit salad",
+  imgSrc: nutritionSlides.Slide1,
   },
 ];
 
