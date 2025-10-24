@@ -101,6 +101,13 @@ export const InfograficCardsData = [
     description: "Summary of the Nutrition chapter",
     carouselImgSrc: [nutritionSlides.Slide10, nutritionSlides.Slide9, nutritionSlides.Slide8],
   },
+  {
+    id: 14,
+    type: "vedioClip",
+    title: "Nutrition - Summary",
+    description: "Summary of the Nutrition chapter",
+    vedioClipSrc: "https://www.youtube.com/watch?v=cKRf53I737E",
+  },
 ];
 
 // Function to append new data
