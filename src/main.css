@@ -1,1 +1,8 @@
 @import "tailwindcss";
+@font-face {
+  font-family: "BBH Sans Hegarty";
+  src: url("/src/assets/fonts/BBH-Sans-Hegarty.woff2") format("woff2"),
+       url("/src/assets/fonts/BBH-Sans-Hegarty.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

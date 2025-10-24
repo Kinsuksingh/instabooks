@@ -25,7 +25,7 @@ const Card = styled.article`
 
 const MediaWrap = styled.div`
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1 / 1;
   background: linear-gradient(135deg, #eef2ff, #e0f7fa);
 `;
 

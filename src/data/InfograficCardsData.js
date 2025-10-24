@@ -1,4 +1,4 @@
-import { nutritionSlides } from "../assets/exportImg.js";
+import { nutritionSlides, videoClips } from "../assets/exportImg.js";
 
 // InfograficCardsData.js
 export const InfograficCardsData = [
@@ -106,7 +106,7 @@ export const InfograficCardsData = [
     type: "vedioClip",
     title: "Nutrition - Summary",
     description: "Summary of the Nutrition chapter",
-    vedioClipSrc: "https://www.youtube.com/watch?v=cKRf53I737E",
+    vedioClipSrc: videoClips.videoClip1,
   },
 ];
 

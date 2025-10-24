@@ -33,10 +33,19 @@ const Logo = styled(Link)`
 
 const LogoText = styled.div`
   font-size: 28px;
-  font-family: 'Cookie', cursive;
-  color: #262626;
-  padding-left: 12px;
-  transition: opacity 150ms ease;
+  font-family: "BBH Sans Hegarty", sans-serif;
+  font-weight: 700; /* bold */
+  background: linear-gradient(
+    45deg,
+    #f58529, /* orange */
+    #dd2a7b, /* pink */
+    #8134af, /* purple */
+    #515bd4  /* blue */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.2px;
+  line-height: 1;
 `;
 
 const NavLinks = styled.nav`
@@ -139,7 +148,7 @@ export default function InstagramSidebar() {
   return (
     <SidebarContainer>
       <Logo to="/instabooks/">
-        <LogoText>InstaBooks</LogoText>
+        <LogoText>InstaLearn</LogoText>
       </Logo>
 
       <NavLinks>

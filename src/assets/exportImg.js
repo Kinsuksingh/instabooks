@@ -34,6 +34,13 @@ export const nutritionSlides = {
 };
 
 
+import videoClip1 from "./Videos/vedioClip1.mp4";
+export const videoClips = {
+  videoClip1,
+};
+
+
+
 import test from "./test.png"
 export const testimg = {
   test,
