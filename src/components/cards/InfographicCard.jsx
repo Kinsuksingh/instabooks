@@ -9,14 +9,10 @@ const Card = styled.article`
   display: grid;
   grid-template-rows: auto 1fr;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   border-radius: 10px;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(255, 255, 255, 0.6) 100%
-  );
+  background: linear-gradient(180deg, #eef2ff 0%, #cfe0fc 100%);
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   transition: transform 200ms ease, box-shadow 200ms ease;

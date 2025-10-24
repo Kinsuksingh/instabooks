@@ -6,21 +6,17 @@ const Card = styled.article`
   display: grid;
   grid-template-rows: auto 1fr;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.75) 100%
-  );
-  backdrop-filter: blur(12px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(180deg, #f5f5f5 0%, #e0e0e0 100%);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-5px) scale(1.01);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px) scale(1.005);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   }
 `;
 

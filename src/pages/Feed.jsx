@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import InfographicCard from "../components/cards/InfographicCard";
+import CarouselCard from "../components/cards/CarouselCard";
 import MCQCard from "../components/cards/MCQCard"; // import your MCQ card
 import { storiesData } from "../data/storiesData";
 import Stories from "../components/Stories/Stories";
@@ -52,7 +53,9 @@ export default function Feed() {
                 />
               ) : item.type === "question" ? (
                 <MCQCard mcq={item} />
-              ) : null}
+              ) : item.type=== "carousel" ? (
+                <CarouselCard data={item} />
+              ): null}
             </div>
           ))}
         </div>
