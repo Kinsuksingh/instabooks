@@ -1,15 +1,15 @@
 import { Nav } from "react-bootstrap";
-import { FiHome, FiSearch, FiPlusSquare, FiBookOpen, FiUser } from "react-icons/fi";
+import { FiHome, FiBookOpen, FiUser } from "react-icons/fi";
+import { FaChalkboardTeacher } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
   const navItems = [
-    ["/instabooks/", <FiHome />],
-    ["/instabooks/search", <FiSearch />],
-    ["/instabooks/create", <FiPlusSquare />],
-    ["/instabooks/library", <FiBookOpen />],
-    ["/instabooks/profile", <FiUser />],
+    ["/instalearn/", <FiHome />],
+    ["/instalearn/teacher", <FaChalkboardTeacher />],
+    ["/instalearn/library", <FiBookOpen />],
+    ["/instalearn/profile", <FiUser />],
   ];
 
   return (

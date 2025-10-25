@@ -1,261 +1,363 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { FaUserTie, FaUserGraduate, FaChalkboardTeacher, FaChevronDown } from 'react-icons/fa';
+import { FaBook, FaHistory, FaClock, FaUser, FaEdit, FaStar, FaChevronRight } from 'react-icons/fa';
 
 // Animations
-const float = keyframes`
-  0%, 100% { transform: translate(0,0) scale(1); }
-  33% { transform: translate(30px,-30px) scale(1.1); }
-  66% { transform: translate(-20px,20px) scale(0.9); }
-`;
-
 const slideUp = keyframes`
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const bounce = keyframes`
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-`;
-
-const progress = keyframes`
-  0% { width:0%; }
-  50% { width:70%; }
-  100% { width:0%; }
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 // Styled components
 const Wrapper = styled.div`
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-  min-height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  position:relative;
-`;
-
-const BackgroundAnimation = styled.div`
-  position:absolute;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-`;
-
-const Circle = styled.div`
-  position:absolute;
-  border-radius:50%;
-  background: rgba(255,255,255,0.1);
-  animation: ${float} 20s infinite ease-in-out;
-  &:nth-child(1) { width:300px;height:300px;top:10%;left:10%; animation-delay:0s; }
-  &:nth-child(2) { width:200px;height:200px;top:60%;right:15%; animation-delay:3s; }
-  &:nth-child(3) { width:150px;height:150px;bottom:20%;left:20%; animation-delay:6s; }
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100%;
+  padding: 20px;
 `;
 
 const Container = styled.div`
-  position:relative;
-  z-index:1;
-  text-align:center;
-  padding:40px;
-  background: rgba(255,255,255,0.95);
-  border-radius:10px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.3);
-  max-width:500px;
-  animation: ${slideUp} 0.8s ease-out;
-
-  @media(max-width:600px){ margin:20px; padding:20px; }
-`;
-
-const IconContainer = styled.div` margin-bottom:20px; `;
-const ConstructionIcon = styled.div`
-  font-size:70px;
-  border-radius:50%;
-  width:100px;height:100px;
-  margin:0 auto;
-  background: linear-gradient(135deg,#667eea,#764ba2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-weight:bold;
-  animation: ${bounce} 2s infinite;
-`;
-
-const Title = styled.h1`
-  font-size:2.5em;
-  color:#2d3748;
-  margin-bottom:10px;
-  font-weight:700;
-  @media(max-width:600px){ font-size:2em; }
-`;
-
-const Subtitle = styled.p`
-  font-size:1.2em;
-  color:#718096;
-  margin-bottom:25px;
-  line-height:1.6;
-`;
-
-const ProgressContainer = styled.div`
-  width:100%;
-  height:8px;
-  background:#e2e8f0;
-  border-radius:10px;
-  overflow:hidden;
-  margin-bottom:20px;
-`;
-
-const ProgressBar = styled.div`
-  height:100%;
-  background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);
-  border-radius:10px;
-  animation: ${progress} 3s ease-in-out infinite;
-`;
-
-// Custom dropdown styles
-const DropdownContainer = styled.div`
-  position: relative;
   width: 100%;
-  margin-bottom: 25px;
+  margin: 0 auto;
+  animation: ${slideUp} 0.8s ease-out;
 `;
 
-const DropdownHeader = styled.div`
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  padding: 12px 20px;
-  font-size: 16px;
+const ProfileCard = styled.div`
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+`;
+
+const ProfileHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+
+  @media(max-width: 600px) {
+    flex-direction: column;
+    text-align: center;
+  }
+`;
+
+const Avatar = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+`;
+
+const ProfileInfo = styled.div`
+  flex: 1;
+`;
+
+const UserName = styled.h1`
+  font-size: 2em;
+  color: #2d3748;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+`;
+
+const UserEmail = styled.p`
+  color: #718096;
+  margin: 0 0 10px 0;
+`;
+
+const StatsContainer = styled.div`
+  display: flex;
+  gap: 30px;
+  margin-top: 15px;
+
+  @media(max-width: 600px) {
+    justify-content: center;
+  }
+`;
+
+const Stat = styled.div`
+  text-align: center;
+`;
+
+const StatNumber = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  color: #667eea;
+`;
+
+const StatLabel = styled.div`
+  font-size: 14px;
+  color: #718096;
+`;
+
+const EditButton = styled.button`
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 25px;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s;
 
-  &:hover { border-color: #667eea; }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
 `;
 
-const DropdownList = styled.ul`
-  position: absolute;
-  width: 100%;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  max-height: 200px;
-  overflow-y: auto;
-  margin-top: 5px;
-  padding: 0;
-  list-style: none;
-  z-index: 10;
-`;
-
-const DropdownItem = styled.li`
-  padding: 10px 20px;
-  display:flex;
-  align-items:center;
+const TabContainer = styled.div`
+  display: flex;
   gap: 10px;
-  cursor:pointer;
-  transition: background 0.2s;
-
-  &:hover { background: #f0f4ff; }
+  margin-bottom: 20px;
 `;
 
-const NotifyButton = styled.button`
-  margin-top:10px;
-  padding:15px 40px;
-  font-size:16px;
-  font-weight:600;
-  color:white;
-  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-  border:none;
-  border-radius:50px;
-  cursor:pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+const Tab = styled.button`
+  flex: 1;
+  padding: 12px;
+  background: ${props => props.active ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'rgba(255, 255, 255, 0.95)'};
+  color: ${props => props.active ? 'white' : '#718096'};
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
-  &:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.6); }
-  &:active { transform: translateY(0); }
-  &:disabled { opacity:0.6; cursor:not-allowed; }
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
-export default function ComingSoon() {
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
+const HistoryCard = styled.div`
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: ${fadeIn} 0.5s ease-out;
+`;
 
-  const teachers = [
-    { name: "Prof. Michael Chen", icon: <FaUserTie /> },
-    { name: "Dr. Sarah Johnson", icon: <FaUserGraduate /> },
-    { name: "Mr. David Kumar", icon: <FaChalkboardTeacher /> },
-  ];
+const HistoryItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  &:hover {
+    background: #e6f2ff;
+    transform: translateX(5px);
+  }
 
-  const selectTeacher = (teacher) => {
-    setSelectedTeacher(teacher);
-    setIsOpen(false);
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const BookIcon = styled.div`
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+`;
+
+const HistoryInfo = styled.div`
+  flex: 1;
+`;
+
+const BookTitle = styled.h3`
+  margin: 0 0 5px 0;
+  color: #2d3748;
+  font-size: 16px;
+`;
+
+const BookMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+  color: #718096;
+`;
+
+const TimeStamp = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+const Progress = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+const ChevronIcon = styled(FaChevronRight)`
+  color: #cbd5e0;
+  font-size: 18px;
+`;
+
+const EmptyState = styled.div`
+  text-align: center;
+  padding: 40px;
+  color: #718096;
+`;
+
+const EmptyIcon = styled.div`
+  font-size: 60px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+`;
+
+export default function UserProfile() {
+  const [activeTab, setActiveTab] = useState('history');
+  useEffect(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, []);
+
+  // Sample user data
+  const userData = {
+    name: "Priya Sharma",
+    email: "priya.sharma@example.com",
+    avatar: "PS",
+    booksRead: 24,
+    hoursSpent: 156,
+    favoriteTeacher: "Ms. Sarah"
   };
 
-  const goToLibrary = () => {
-    if (selectedTeacher) {
-      navigate('/instabooks/library');
+  // Sample history data
+  const historyData = [
+    {
+      id: 1,
+      title: "Advanced Mathematics",
+      teacher: "Prof. Michael Chen",
+      time: "2 hours ago",
+      progress: 75,
+      icon: "📐"
+    },
+    {
+      id: 2,
+      title: "Introduction to Physics",
+      teacher: "Dr. Sarah Johnson",
+      time: "Yesterday",
+      progress: 45,
+      icon: "⚡"
+    },
+    {
+      id: 3,
+      title: "Chemistry Fundamentals",
+      teacher: "Mr. David Kumar",
+      time: "2 days ago",
+      progress: 90,
+      icon: "🧪"
+    },
+    {
+      id: 4,
+      title: "Biology Basics",
+      teacher: "Dr. Emily Brown",
+      time: "1 week ago",
+      progress: 100,
+      icon: "🧬"
     }
-  };
+  ];
 
   return (
     <Wrapper>
-      <BackgroundAnimation>
-        <Circle />
-        <Circle />
-        <Circle />
-      </BackgroundAnimation>
-
       <Container>
-        <IconContainer>
-          <ConstructionIcon>🎓</ConstructionIcon>
-        </IconContainer>
+        <ProfileCard>
+          <ProfileHeader>
+            <Avatar>{userData.avatar}</Avatar>
+            <ProfileInfo>
+              <UserName>{userData.name}</UserName>
+              <UserEmail>{userData.email}</UserEmail>
+              <StatsContainer>
+                <Stat>
+                  <StatNumber>{userData.booksRead}</StatNumber>
+                  <StatLabel>Books Read</StatLabel>
+                </Stat>
+                <Stat>
+                  <StatNumber>{userData.hoursSpent}</StatNumber>
+                  <StatLabel>Hours</StatLabel>
+                </Stat>
+                <Stat>
+                  <StatNumber>
+                    <FaStar style={{color: '#fbbf24'}} />
+                  </StatNumber>
+                  <StatLabel>{userData.favoriteTeacher}</StatLabel>
+                </Stat>
+              </StatsContainer>
+            </ProfileInfo>
+            <EditButton>
+              <FaEdit /> Edit Profile
+            </EditButton>
+          </ProfileHeader>
+        </ProfileCard>
 
-        <Title>Choose Your Favorite Teacher</Title>
-        <Subtitle>Select a teacher to access their complete library</Subtitle>
+        <TabContainer>
+          <Tab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>
+            <FaHistory /> Reading History
+          </Tab>
+          <Tab active={activeTab === 'favorites'} onClick={() => setActiveTab('favorites')}>
+            <FaStar /> Favorites
+          </Tab>
+        </TabContainer>
 
-        <ProgressContainer>
-          <ProgressBar />
-        </ProgressContainer>
-
-        {/* Enhanced Dropdown */}
-        <DropdownContainer>
-          <DropdownHeader onClick={toggleDropdown}>
-            {selectedTeacher ? (
-              <div style={{display:'flex', alignItems:'center', gap:'10px'}}>
-                {selectedTeacher.icon} {selectedTeacher.name}
-              </div>
-            ) : "Select Teacher"}
-            <FaChevronDown />
-          </DropdownHeader>
-          {isOpen && (
-            <DropdownList>
-              {teachers.map((teacher, index) => (
-                <DropdownItem key={index} onClick={() => selectTeacher(teacher)}>
-                  {teacher.icon} {teacher.name}
-                </DropdownItem>
-              ))}
-            </DropdownList>
+        <HistoryCard>
+          {activeTab === 'history' && historyData.length > 0 ? (
+            historyData.map((item) => (
+              <HistoryItem key={item.id}>
+                <BookIcon>{item.icon}</BookIcon>
+                <HistoryInfo>
+                  <BookTitle>{item.title}</BookTitle>
+                  <BookMeta>
+                    <TimeStamp>
+                      <FaClock /> {item.time}
+                    </TimeStamp>
+                    <Progress>
+                      <FaBook /> {item.progress}% complete
+                    </Progress>
+                  </BookMeta>
+                </HistoryInfo>
+                <ChevronIcon />
+              </HistoryItem>
+            ))
+          ) : (
+            <EmptyState>
+              <EmptyIcon>📚</EmptyIcon>
+              <h3>No Reading History Yet</h3>
+              <p>Start reading books to see them here!</p>
+            </EmptyState>
           )}
-        </DropdownContainer>
-
-        <NotifyButton onClick={goToLibrary} disabled={!selectedTeacher}>
-          Go to Library
-        </NotifyButton>
+        </HistoryCard>
       </Container>
     </Wrapper>
   );
 }
-
-
-
-
-
-
-

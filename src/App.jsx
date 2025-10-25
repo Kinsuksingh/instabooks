@@ -2,14 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Feed from "./pages/Feed.jsx";
-import InstabookApp from "./pages/Home.jsx";
+import InstalearnApp from "./pages/Home.jsx";
 import Profile from "./pages/Profile.jsx";
 import ComingSoon from "./pages/ComingSoon.jsx";
 import Topbar from "./components/layout/Topbar.jsx";
 import SidebarLeft from "./components/layout/SidebarLeft.jsx";
 import SidebarRight from "./components/layout/SidebarRight.jsx";
 import BottomNav from "./components/layout/BottomNav.jsx";
-import DataGatheringPage from "./pages/DataGatheringPage.jsx";
+import TeacherProfile from "./pages/TeacherProfile.jsx";
+
+
 
 // Styled Components
 const AppWrapper = styled.div`
@@ -191,12 +193,12 @@ export default function App() {
           </MobileTopbar>
 
           <Routes>
-            <Route path="/instabooks" element={<InstabookApp />} />
-            <Route path="/instabooks/search" element={<ComingSoon />} />
-            <Route path="/instabooks/create" element={<DataGatheringPage />} />
-            <Route path="/instabooks/library" element={<Feed />} />
-            <Route path="/instabooks/notifications" element={<ComingSoon />} />
-            <Route path="/instabooks/profile" element={<Profile />} />
+            <Route path="/instalearn" element={<InstalearnApp />} />
+            <Route path="/instalearn/teacher" element={ <TeacherProfile />} />
+            <Route path="/instalearn/library" element={<Feed />} />
+            <Route path="/instalearn/notifications" element={<ComingSoon />} />
+            <Route path="/instalearn/more" element={<ComingSoon />} />
+            <Route path="/instalearn/profile" element={<Profile />} />
           </Routes>
         </MainContent>
 

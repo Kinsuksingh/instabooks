@@ -1,8 +1,9 @@
 import { Navbar, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FiSun} from "react-icons/fi";
-import { FaBookReader } from 'react-icons/fa';
+import { FaBookReader } from "react-icons/fa";
+// import { FiSun } from "react-icons/fi"; // use this if you want to toggle
+import { GiOpenBook } from "react-icons/gi";
 
 /* ================= Styles ================= */
 
@@ -18,7 +19,6 @@ const SafeSticky = styled(Navbar)`
   padding-bottom: 6px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 `;
-
 
 const Bar = styled.div`
   width: 100%;
@@ -67,45 +67,49 @@ const Logo = styled(Link)`
   text-decoration: none;
   display: flex;
   align-items: center;
+  gap: 10px; /* space between icon and text */
+`;
+
+const LogoMark = styled(GiOpenBook)`
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: #111; /* keep high contrast; adjust to your brand */
 `;
 
 const LogoText = styled.div`
   font-size: 28px;
-  font-family: "BBH Sans Hegarty", sans-serif;
-  font-weight: 700; /* bold */
-  background: linear-gradient(
-    45deg,
-    #f58529, /* orange */
-    #dd2a7b, /* pink */
-    #8134af, /* purple */
-    #515bd4  /* blue */
-  );
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    sans-serif;
+  font-weight: 700;
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  background-clip: text;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: transparent; /* fallback */
+  -webkit-text-fill-color: transparent; /* webkit */
   letter-spacing: 0.2px;
   line-height: 1;
 `;
 
-
-
-
 /* ================= Component ================= */
 
 export default function Topbar() {
-  const ThemeIcon = FaBookReader;   //const ThemeIcon = FiSun;
-  
+  const ThemeIcon = FaBookReader; // swap to FiSun if/when you add theme toggling
+
   const handleToggle = () => {
-    console.log("Toggled theme to");
+    console.log("Toggled theme");
   };
 
   return (
     <div className="topbar-wrapper">
       {/* Mobile-only top bar */}
-      <SafeSticky bg="white" className="shadow-sm d-lg-none">
+      <SafeSticky className="shadow-sm d-lg-none">
         <Container fluid className="px-3">
           <Bar>
             <Left>
-              <Logo to="/instabooks/" aria-label="Go to home">
+              <Logo to="/instalearn/" aria-label="Go to home">
+                <LogoMark aria-hidden="true" />
                 <LogoText>InstaLearn</LogoText>
               </Logo>
             </Left>
@@ -113,10 +117,7 @@ export default function Topbar() {
             <Center />
 
             <Right>
-              <IconBtn
-                type="button"
-                onClick={handleToggle}
-              >
+              <IconBtn type="button" onClick={handleToggle} aria-label="Toggle theme">
                 <ThemeIcon size={20} />
               </IconBtn>
             </Right>

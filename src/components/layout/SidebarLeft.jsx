@@ -1,4 +1,5 @@
-import { FiHome, FiSearch, FiPlusSquare, FiBookOpen, FiUser, FiMenu, FiHeart } from "react-icons/fi";
+import { FiHome, FiBookOpen, FiUser, FiMenu, FiHeart } from "react-icons/fi";
+import { FaChalkboardTeacher } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
@@ -25,6 +26,7 @@ const SidebarContainer = styled.aside`
 const Logo = styled(Link)`
   padding: 25px 12px 16px 12px;
   margin-bottom: 19px;
+  margin-left: 20px;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -137,17 +139,16 @@ export default function InstagramSidebar() {
   const { pathname } = useLocation();
 
   const links = [
-    { to: "/instabooks/", icon: <FiHome />, label: "Home" },
-    { to: "/instabooks/search", icon: <FiSearch />, label: "Search" },
-    { to: "/instabooks/create", icon: <FiPlusSquare />, label: "Create" },
-    { to: "/instabooks/library", icon: <FiBookOpen />, label: "Library", hasNotification: true },
-    { to: "/instabooks/notifications", icon: <FiHeart />, label: "Notifications" },
-    { to: "/instabooks/profile", icon: <FiUser />, label: "Profile" },
+    { to: "/instalearn/", icon: <FiHome />, label: "Home" },
+    { to: "/instalearn/teacher", icon: <FaChalkboardTeacher />, label: "Teacher" },
+    { to: "/instalearn/library", icon: <FiBookOpen />, label: "Library", hasNotification: true },
+    { to: "/instalearn/notifications", icon: <FiHeart />, label: "Notifications" },
+    { to: "/instalearn/profile", icon: <FiUser />, label: "Profile" },
   ];
 
   return (
     <SidebarContainer>
-      <Logo to="/instabooks/">
+      <Logo to="/instalearn/">
         <LogoText>InstaLearn</LogoText>
       </Logo>
 
@@ -170,7 +171,7 @@ export default function InstagramSidebar() {
       </NavLinks>
 
       <BottomSection>
-        <NavLink to="/instabooks/more" $active={pathname === "/instabooks/more"}>
+        <NavLink to="/instalearn/more" $active={pathname === "/instalearn/more"}>
           <IconWrapper><FiMenu /></IconWrapper>
           <LabelText>More</LabelText>
         </NavLink>
