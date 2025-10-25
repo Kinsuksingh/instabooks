@@ -12,15 +12,6 @@ const Card = styled.article`
   max-width: 1000px;
   border-radius: 10px;
   overflow: hidden;
-  background: linear-gradient(180deg, #eef2ff 0%, #cfe0fc 100%);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  transition: transform 200ms ease, box-shadow 200ms ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
-  }
 `;
 
 const MediaWrap = styled.div`
