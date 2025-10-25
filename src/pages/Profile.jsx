@@ -16,7 +16,12 @@ const fadeIn = keyframes`
 // Styled components
 const Wrapper = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+  135deg,
+  #8BE3F5 0%,
+  #9FEFD0 50%,
+  #B5F8B5 100%
+);
   min-height: 100%;
   padding: 20px;
 `;

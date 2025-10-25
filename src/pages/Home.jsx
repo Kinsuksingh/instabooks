@@ -29,7 +29,13 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+ background: linear-gradient(
+  135deg,
+  #8BE3F5 0%,
+  #9FEFD0 50%,
+  #B5F8B5 100%
+);
+
   font-family: 'Inter', sans-serif;
   padding: 1rem;
 
@@ -88,7 +94,7 @@ const HeroText = styled.h1`
 `;
 
 const GradientText = styled.span`
-  background: linear-gradient(to bottom, #ff6b6b 20%, #4ecdc4 50%, #BFA4FF 100%);
+  background: green;
   -webkit-background-clip: text;
   color: transparent;
   font-style: italic;
@@ -239,7 +245,7 @@ const ContinueButton = styled.button`
   gap: 0.75rem;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   background: ${({ disabled }) =>
-    disabled ? '#e2e8f0' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'};
+    disabled ? '#e2e8f0' : 'linear-gradient(135deg, #667eea 0%, #667eea 100%)'};
   color: ${({ disabled }) => (disabled ? '#94a3b8' : '#fff')};
   border: none;
   box-shadow: ${({ disabled }) =>
@@ -281,7 +287,9 @@ const CardButton = styled.button`
   ${({ selected }) =>
     selected
       ? `
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #B7F0CF 0%, #28A745 50%, #0E7C3F 100%);
+
+
     color: white;
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
@@ -293,8 +301,10 @@ const CardButton = styled.button`
     border-color: #e2e8f0;
     
     &:hover {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      color: white;
+      background: linear-gradient(180deg, #E8FBF0 0%, #CFF6DF 100%);
+
+
+      color: black;
       border-color: transparent;
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(240, 147, 251, 0.3);
@@ -306,14 +316,14 @@ const CardButton = styled.button`
   }
 `;
 
-const EmptySubjectsCard = styled(GlassCard)`
+const EmptySubjectsCard = styled.div`
   padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: white;
-  
+  border: 2px solid lightgray;
+  border-radius: 1rem;
   svg {
     margin-bottom: 1rem;
     opacity: 1.5;
@@ -439,7 +449,6 @@ export default function InstalearnApp() {
                 </IconWrapper>
                 <div>
                   <HeaderText>Select Your Grade</HeaderText>
-                  <HeaderSubText>Choose your current academic level</HeaderSubText>
                 </div>
               </SectionHeader>
 
@@ -460,7 +469,6 @@ export default function InstalearnApp() {
                 </IconWrapper>
                 <div>
                   <HeaderText>Choose Your Subject</HeaderText>
-                  <HeaderSubText>Pick the subject you want to focus on</HeaderSubText>
                 </div>
               </SectionHeader>
 

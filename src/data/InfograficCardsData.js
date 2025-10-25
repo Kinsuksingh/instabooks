@@ -81,28 +81,13 @@ export const InfograficCardsData = [
   },
   {
     id: 12,
-  type: "question",
-  title: "Nutrition Basics",
-  description:
-    "Which of the following is an example of heterotrophic nutrition?",
-  options: [
-    "Photosynthesis in plants",
-    "Eating a fruit salad",
-    "Making food from sunlight",
-    "Autotrophic bacteria producing their own food",
-  ],
-  correctAnswer: "Eating a fruit salad",
-  imgSrc: nutritionSlides.Slide1,
-  },
-  {
-    id: 13,
     type: "carousel",
     title: "Nutrition - Summary",
     description: "Summary of the Nutrition chapter",
     carouselImgSrc: [nutritionSlides.Slide10, nutritionSlides.Slide9, nutritionSlides.Slide8],
   },
   {
-    id: 14,
+    id: 13,
     type: "vedioClip",
     title: "Nutrition - Summary",
     description: "Summary of the Nutrition chapter",

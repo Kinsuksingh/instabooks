@@ -1,9 +1,8 @@
 import { Navbar, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FaBookReader } from "react-icons/fa";
-// import { FiSun } from "react-icons/fi"; // use this if you want to toggle
 import { GiOpenBook } from "react-icons/gi";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 /* ================= Styles ================= */
 
@@ -74,7 +73,7 @@ const LogoMark = styled(GiOpenBook)`
   width: 28px;
   height: 28px;
   flex: 0 0 28px;
-  color: #111; /* keep high contrast; adjust to your brand */
+  color: #f0703c /* keep high contrast; adjust to your brand */
 `;
 
 const LogoText = styled.div`
@@ -95,7 +94,6 @@ const LogoText = styled.div`
 /* ================= Component ================= */
 
 export default function Topbar() {
-  const ThemeIcon = FaBookReader; // swap to FiSun if/when you add theme toggling
 
   const handleToggle = () => {
     console.log("Toggled theme");
@@ -117,8 +115,8 @@ export default function Topbar() {
             <Center />
 
             <Right>
-              <IconBtn type="button" onClick={handleToggle} aria-label="Toggle theme">
-                <ThemeIcon size={20} />
+              <IconBtn type="button" onClick={handleToggle} aria-label="Toggle">
+                <RxHamburgerMenu size={20} />
               </IconBtn>
             </Right>
           </Bar>

@@ -1,22 +1,88 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import {
+  AiOutlineHeart,
+  AiFillHeart,
+  AiOutlineShareAlt,
+} from "react-icons/ai";
+import { BsChat, BsBookmark, BsBookmarkFill, BsThreeDots } from "react-icons/bs";
+import { FiSend } from "react-icons/fi";
 
+/**
+ * Instagram-style Post Card with LinkedIn-like reaction summary and a share button.
+ * - Header: avatar, name, menu (…)
+ * - Media: square image
+ * - Actions: Like / Comment / Share (left) and Bookmark (right)
+ * - Reactions bar: LinkedIn-ish compact pill with avatars + like count
+ * - Caption + timestamp
+ * - Share supports Web Share API when available, falls back to clipboard
+ */
 
 const Card = styled.article`
-  position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr;
   width: 100%;
-  max-width: 1000px;
-  border-radius: 10px;
+  max-width: 680px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+`;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+`;
+
+const HeaderLeft = styled.div`
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+  align-items: center;
+`;
+
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eef2ff;
+`;
+
+const UserBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+`;
+
+const Username = styled.span`
+  font-weight: 600;
+  color: #0f172a;
+`;
+
+const Subline = styled.span`
+  font-size: 12px;
+  color: #64748b;
+`;
+
+const MenuBtn = styled.button`
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  &:hover { background: rgba(15, 23, 42, 0.04); }
 `;
 
 const MediaWrap = styled.div`
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1; /* Instagram-like square */
   background: linear-gradient(135deg, #eef2ff, #e0f7fa);
 `;
 
@@ -27,76 +93,107 @@ const Img = styled.img`
   display: block;
 `;
 
+const ActionsBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 6px 12px;
+`;
+
+const ActionsLeft = styled.div`
+  display: flex;
+  gap: 12px;
+`;
 
 const IconBtn = styled.button`
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(6px);
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  color: #0f172a;
   cursor: pointer;
-  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-  &:active {
-    transform: translateY(0);
-  }
+  transition: transform 120ms ease, background 120ms ease;
+  &:hover { background: rgba(15, 23, 42, 0.05); }
+  &:active { transform: scale(0.98); }
 `;
 
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const ReactionsPill = styled.div`
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-  padding: 18px 18px 20px 18px;
+  margin: 0 12px 6px 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+  border-radius: 999px;
+  font-size: 13px;
   color: #0f172a;
 `;
 
-const Title = styled.h3`
-  margin: 0;
-  font-size: clamp(18px, 2.2vw, 22px);
-  line-height: 1.25;
-  letter-spacing: -0.2px;
-`;
-
-const Desc = styled.p`
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.55;
-  color: #334155;
-`;
-
-
-const Actions = styled.div`
+const MiniStack = styled.div`
   display: flex;
-  gap: 10px;
 `;
 
+const MiniAvatar = styled.img`
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  margin-left: -6px;
+  &:first-child { margin-left: 0; }
+`;
 
+const Content = styled.div`
+  padding: 2px 12px 14px 12px;
+`;
 
+const Caption = styled.p`
+  margin: 6px 0 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #0f172a;
+`;
 
+const TimeStamp = styled.time`
+  font-size: 12px;
+  color: #64748b;
+`;
 
-
-export default function InfographicCard({
+export default function InstaPostCard({
+  username = "ui.maker",
+  userSubline = "Designer · 2h",
+  avatarSrc = "https://i.pravatar.cc/300?img=5",
   title = "Infographic Title",
   description = "A short, crisp line describing what this infographic is about.",
   imgSrc = "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop",
   likedDefault = false,
   savedDefault = false,
+  likeCountDefault = 12,
+  commenterAvatars = [
+    "https://i.pravatar.cc/100?img=12",
+    "https://i.pravatar.cc/100?img=32",
+    "https://i.pravatar.cc/100?img=8",
+  ],
+  postUrl = typeof window !== "undefined" ? window.location.href : "",
   onLikeChange,
   onBookmarkChange,
+  onShare,
 }) {
   const [liked, setLiked] = useState(likedDefault);
   const [saved, setSaved] = useState(savedDefault);
+  const [likeCount, setLikeCount] = useState(likeCountDefault);
+
+  const ariaLabelLike = liked ? "Unlike" : "Like";
+  const ariaLabelSave = saved ? "Remove bookmark" : "Bookmark";
 
   const toggleLike = () => {
     const next = !liked;
     setLiked(next);
+    setLikeCount((c) => (next ? c + 1 : Math.max(0, c - 1)));
     onLikeChange && onLikeChange(next);
   };
 
@@ -106,33 +203,78 @@ export default function InfographicCard({
     onBookmarkChange && onBookmarkChange(next);
   };
 
+  const shareData = useMemo(() => ({
+    title,
+    text: `${username} on Infographics — ${title}`,
+    url: postUrl,
+  }), [title, username, postUrl]);
+
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link copied to clipboard");
+      }
+      onShare && onShare(shareData);
+    } catch (e) {
+      console.error("Share failed:", e);
+    }
+  };
+
   return (
-    <Card role="article" aria-label={`${title} infographic card`}>
+    <Card role="article" aria-label={`${title} instagram-style post`}>
+      <Header>
+        <HeaderLeft>
+          <Avatar src={avatarSrc} alt={`${username} avatar`} />
+          <UserBlock>
+            <Username>{username}</Username>
+            <Subline>{userSubline}</Subline>
+          </UserBlock>
+        </HeaderLeft>
+        <MenuBtn aria-label="Post menu" title="More">
+          <BsThreeDots size={18} />
+        </MenuBtn>
+      </Header>
+
       <MediaWrap>
         <Img src={imgSrc} alt={title} />
       </MediaWrap>
 
+      <ActionsBar>
+        <ActionsLeft>
+          <IconBtn onClick={toggleLike} aria-label={ariaLabelLike} title={ariaLabelLike}>
+            {liked ? <AiFillHeart size={22} /> : <AiOutlineHeart size={22} />}
+          </IconBtn>
+          <IconBtn aria-label="Comment" title="Comment">
+            <BsChat size={20} />
+          </IconBtn>
+          <IconBtn onClick={handleShare} aria-label="Share" title="Share">
+            {/* Using paper-plane style for IG-like share */}
+            <FiSend size={20} />
+          </IconBtn>
+        </ActionsLeft>
+        <IconBtn onClick={toggleSave} aria-label={ariaLabelSave} title={ariaLabelSave}>
+          {saved ? <BsBookmarkFill size={20} /> : <BsBookmark size={20} />}
+        </IconBtn>
+      </ActionsBar>
+
+      {/* LinkedIn-like compact reactions summary */}
+      <ReactionsPill aria-label={`${likeCount} likes`}>
+        <MiniStack>
+          {commenterAvatars.slice(0, 3).map((src, i) => (
+            <MiniAvatar key={i} src={src} alt="reaction avatar" />
+          ))}
+        </MiniStack>
+        <span>{likeCount} likes</span>
+      </ReactionsPill>
+
       <Content>
-        <div>
-          <Title>{title}</Title>
-          <Desc>{description}</Desc>
-        </div>
-        <Actions>
-          <IconBtn
-            onClick={toggleLike}
-            aria-label={liked ? "Unlike" : "Like"}
-            title={liked ? "Unlike" : "Like"}
-          >
-            {liked ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
-          </IconBtn>
-          <IconBtn
-            onClick={toggleSave}
-            aria-label={saved ? "Remove bookmark" : "Bookmark"}
-            title={saved ? "Remove bookmark" : "Bookmark"}
-          >
-            {saved ? <BsBookmarkFill size={18} /> : <BsBookmark size={18} />}
-          </IconBtn>
-        </Actions>
+        <Caption>
+          <strong>{username}</strong> {description}
+        </Caption>
+        <TimeStamp dateTime={new Date().toISOString()}>Just now</TimeStamp>
       </Content>
     </Card>
   );

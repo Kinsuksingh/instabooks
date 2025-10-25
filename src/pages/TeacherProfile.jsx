@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import { BookOpen, Grid, Bookmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -13,37 +13,6 @@ const Container = styled.div`
   margin: 0 auto;
   background: #fff;
   min-height: 100vh;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
-`;
-
-const HeaderLeft = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const HeaderTitle = styled.span`
-  font-weight: 600;
-  font-size: 1rem;
-  @media (min-width: 768px) {
-    font-size: 1.125rem;
-  }
-`;
-
-const HeaderRight = styled.div`
-  display: flex;
-  gap: 1rem;
-  font-size: 1.25rem;
-  @media (min-width: 768px) {
-    font-size: 1.5rem;
-  }
 `;
 
 const ProfileSection = styled.div`
@@ -320,6 +289,9 @@ const PostItem = styled.div`
 // ---------- Component ----------
 
 export default function TeacherProfile() {
+  useEffect(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, []);
   const navigate = useNavigate();
 
   const handleBookClick = (index) => {
@@ -330,15 +302,6 @@ export default function TeacherProfile() {
 
   return (
     <Container>
-      <Header>
-        <HeaderLeft>
-          <BookOpen size={20} />
-          <HeaderTitle>{teacher.username}</HeaderTitle>
-        </HeaderLeft>
-        <HeaderRight>
-          <button>☰</button>
-        </HeaderRight>
-      </Header>
 
       <ProfileSection>
         <ProfileTop>
