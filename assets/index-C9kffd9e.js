@@ -759,14 +759,18 @@ Please change the parent <Route path="${O}"> to <Route path="${O==="/"?"*":`${O}
   animation: ${p6} ${({$duration:a})=>a}s infinite ease-in-out;
   animation-delay: ${({$delay:a})=>a}s;
   display: none;
-  @media (min-width: 768px) { display: block; }
+  @media (min-width: 768px) {
+    display: block;
+  }
 `,v6=w.div`
   position: absolute;
   opacity: 0.18;
   animation: ${h6} ${({$duration:a})=>a}s infinite ease-in-out;
   animation-delay: ${({$delay:a})=>a}s;
   display: none;
-  @media (min-width: 768px) { display: block; }
+  @media (min-width: 768px) {
+    display: block;
+  }
 `,y6=w.div`
   position: relative;
   z-index: 10;
@@ -783,7 +787,10 @@ Please change the parent <Route path="${O}"> to <Route path="${O==="/"?"*":`${O}
   box-shadow: ${it.shadow};
   border-radius: 1.25rem;
   padding: 1.5rem;
-  @media (min-width: 768px) { border-radius: 1rem; padding: 2rem; }
+  @media (min-width: 768px) {
+    border-radius: 1rem;
+    padding: 2rem;
+  }
 `,x6=w(Jg)`
   display: flex;
   flex-direction: column;
@@ -792,9 +799,12 @@ Please change the parent <Route path="${O}"> to <Route path="${O==="/"?"*":`${O}
   text-align: center;
   margin-bottom: 1.25rem;
   display: grid;
-  gap: .75rem;
+  gap: 0.75rem;
   justify-items: center;
-  @media (min-width: 768px) { margin-bottom: 2rem; gap: 1rem; }
+  @media (min-width: 768px) {
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
 `,w6=w.h1`
   font-size: clamp(1.4rem, 5.2vw, 2.4rem);
   font-weight: 900;
@@ -806,33 +816,73 @@ Please change the parent <Route path="${O}"> to <Route path="${O==="/"?"*":`${O}
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
 `,C6=w.span`
-  &::after { content: "|"; animation: ${m6} 1s infinite; margin-left: 4px; }
+  &::after {
+    content: "|";
+    animation: ${m6} 1s infinite;
+    margin-left: 4px;
+  }
 `,nm=w.div`
-  display: flex; gap: .75rem; align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 `,am=w.div`
-  width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
   background: linear-gradient(135deg, ${it.primary} 0%, ${it.success} 100%);
-  display: grid; place-items: center; color: white; flex-shrink: 0;
-  box-shadow: 0 8px 24px rgba(14,165,233,.25);
+  display: grid;
+  place-items: center;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.25);
 `,im=w.div`
-  display: grid; gap: .1rem;
-  h2{ margin:0; font-size:1.1rem; color:#0f172a; font-weight:800; }
-  p{ margin:0; font-size:.85rem; color:${it.subtext}; }
-`,T6=w.div` position: relative; `,j6=w.select`
+  display: grid;
+  gap: 0.1rem;
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #0f172a;
+    font-weight: 800;
+  }
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: ${it.subtext};
+  }
+`,T6=w.div`
+  position: relative;
+`,j6=w.select`
   width: 100%;
   padding: 1rem 2.75rem 1rem 1rem;
-  border-radius: .9rem;
+  border-radius: 0.9rem;
   border: 2px solid #e2e8f0;
-  font-size: 1rem; font-weight: 600; color: ${it.text};
-  background: white; appearance: none; cursor: pointer;
-  transition: border-color .2s, box-shadow .2s;
-  &:focus { outline: none; border-color: ${it.primary}; box-shadow: 0 0 0 6px ${it.ring}; }
-`,lm=w.div` display: grid; gap: 1.25rem; `,R6=w.div`
-  display: grid; gap: .9rem; grid-template-columns: 1fr;
-  @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+  font-size: 1rem;
+  font-weight: 600;
+  color: ${it.text};
+  background: white;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  &:focus {
+    outline: none;
+    border-color: ${it.primary};
+    box-shadow: 0 0 0 6px ${it.ring};
+  }
+`,lm=w.div`
+  display: grid;
+  gap: 1.25rem;
+`,R6=w.div`
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: 1fr;
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `,M6=w.div`
   border-radius: 1rem;
   padding: 1.1rem 1.1rem 0.9rem;
@@ -844,7 +894,8 @@ Please change the parent <Route path="${O}"> to <Route path="${O==="/"?"*":`${O}
   display: grid;
   gap: 0.55rem;
   align-content: start;
-  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s, background 0.18s, color 0.18s;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s,
+    background 0.18s, color 0.18s;
 
   &:hover {
     transform: translateY(-2px);
@@ -860,25 +911,48 @@ Please change the parent <Route path="${O}"> to <Route path="${O==="/"?"*":`${O}
     transform: translateY(-1px);
   `}
 `,z6=w.div`
-  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .75rem;
-  span { font-weight: 800; letter-spacing: .2px; }
-  .icon { opacity: .9; }
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  span {
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .icon {
+    opacity: 0.9;
+  }
 `,O6=w.div`
-  margin-top: .35rem; padding-top: .5rem;
-  border-top: 1px dashed rgba(0,0,0,.12);
+  margin-top: 0.35rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
   ${({$selected:a})=>a&&"border-top-color: rgba(0,0,0,.35);"}
-`,_6=w.div` display:flex; flex-wrap: wrap; gap:.4rem; `,A6=w.button`
+`,_6=w.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+`,A6=w.button`
   border: 0;
   cursor: pointer;
-  font-size: .78rem; font-weight: 800; padding: .38rem .6rem; border-radius: .7rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.38rem 0.6rem;
+  border-radius: 0.7rem;
   background: ${({$inSelected:a})=>a?"rgba(255,255,255,.9)":"#f1f5f9"};
   color: ${({$inSelected:a})=>a?"#0f172a":it.text};
   box-shadow: ${({$inSelected:a})=>a?"0 2px 6px rgba(0,0,0,.12)":"none"};
-  border: 1px solid ${({$inSelected:a})=>a?"rgba(0,0,0,.12)":"#e2e8f0"};
-  transition: transform .12s ease, box-shadow .18s ease;
-  &:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,.12); }
-  &:focus-visible { outline: 3px solid ${it.ring}; outline-offset: 2px; }
-`;function D6(){const a=Af(),[l,u]=b.useState(""),[o,c]=b.useState(""),[f,p]=b.useState(""),[y,g]=b.useState(0),[m,x]=b.useState(!1),[S,E]=b.useState(0),D=["Achieve Excellence","Master Every Subject","Unlock Your Potential"];b.useEffect(()=>{const G=m?40:80,L=2e3,A=setTimeout(()=>{const J=D[y];if(!m&&S===J.length){setTimeout(()=>x(!0),L);return}if(m&&S===0){x(!1),g(B=>(B+1)%D.length);return}E(B=>B+(m?-1:1)),p(J.substring(0,S+(m?-1:1)))},G);return()=>clearTimeout(A)},[S,m,y]);const R={"Grade 9":{subjects:{English:["Ms. Priya Sharma","Mr. Vivek Sinha","Ms. Ritu Malhotra"],Mathematics:["Mr. Rajesh Kumar","Ms. Neha Gupta","Mr. Ankit Jain"],Science:["Ms. Anjali Mehta","Mr. Suresh Iyer","Ms. Pooja Khanna"],"Social Studies":["Siddharth Sir","Ms. Ananya Bose","Mr. Harish Nanda"],Hindi:["Ms. Kavita Reddy","Mr. Manoj Tiwari","Ms. Poonam Joshi"],"Computer Science":["Mr. Arvind Nair","Ms. Shruti Desai","Mr. Kunal Shah"]}},"Grade 10":{subjects:{English:["Ms. Sunita Verma","Mr. Ashish Bhatia","Ms. Riya Kapoor"],Mathematics:["Mr. Rohan Patel","Ms. Priyanka Das","Mr. Sanjay Kulkarni"],Science:["Ms. Anjali Mehta","Mr. Amit Chakraborty","Ms. Meera Nambiar"],"Social Studies":["Siddharth Sir","Ms. Nidhi Arora","Mr. Parth Ghosh"],Hindi:["Ms. Kavita Reddy","Mr. Ajay Sharma","Ms. Shalini Tripathi"],"Computer Science":["Mr. Arvind Nair","Ms. Tanvi Kulkarni","Mr. Rohit Menon"]}},"Grade 11":{subjects:{English:["Ms. Priya Sharma","Mr. Karan Malhotra","Ms. Deepa Rao"],Physics:["Mr. Nitin Agarwal","Ms. Rachna Bansal","Mr. Vivek Mishra"],Chemistry:["Ms. Sneha Kapoor","Mr. Aditya Mehta","Ms. Nupur Jain"],Biology:["Siddharth Sir","Ms. Radhika Sen","Mr. Mohan Pillai"],Mathematics:["Mr. Deepak Rao","Ms. Shreya Iyer","Mr. Varun Sethi"],"Computer Science":["Mr. Arvind Nair","Ms. Naina Khatri","Mr. Prateek Verma"]}},"Grade 12":{subjects:{English:["Ms. Sunita Verma","Mr. Aalok Trivedi","Ms. Garima Singh"],Physics:["Mr. Nitin Agarwal","Ms. Priti Saxena","Mr. Keshav Reddy"],Chemistry:["Ms. Sneha Kapoor","Mr. Rohan Mukherjee","Ms. Farah Qureshi"],Biology:["Siddharth Sir","Ms. Neelam Vaidya","Mr. Sameer Kulkarni"],Mathematics:["Mr. Deepak Rao","Ms. Ishita Shah","Mr. Yashwant Kumar"],"Computer Science":["Mr. Arvind Nair","Ms. Pallavi Menon","Mr. Siddharth Jain"]}}},q={English:Di,Mathematics:K4,Science:I1,Physics:q4,Chemistry:I1,Biology:tm,"Social Studies":tm,Hindi:o6,"Computer Science":e6},$=l?Object.keys(R[l].subjects):[],K=G=>c(G),O=(G,L)=>{(G.key==="Enter"||G.key===" ")&&(G.preventDefault(),K(L))},_=G=>{!l||!o||a("/instalearn/teacher",{state:{grade:l,subject:o,teacher:G}})};return d.jsxs(g6,{children:[d.jsx(Zc,{$color:"rgba(255,255,255,0.16)",$size:520,$top:"-12%",$right:"-6%",$duration:8,$delay:0}),d.jsx(Zc,{$color:"rgba(255,255,255,0.1)",$size:640,$bottom:"-16%",$left:"-8%",$duration:10,$delay:3}),d.jsx(Zc,{$color:"rgba(255,255,255,0.12)",$size:420,$top:"42%",$left:"48%",$duration:12,$delay:6}),[...Array(7)].map((G,L)=>d.jsx(v6,{$duration:9+L*2,$delay:L*.7,style:{left:`${10+L*12}%`,top:`${18+L*9}%`},children:L%2?d.jsx(em,{size:30,color:"rgba(255,255,255,0.5)"}):d.jsx(c6,{size:30,color:"rgba(255,255,255,0.5)"})},L)),d.jsx(y6,{children:d.jsxs(b6,{children:[d.jsx(S6,{children:d.jsx(w6,{children:d.jsx(E6,{children:d.jsx(C6,{children:f})})})}),d.jsxs(x6,{children:[d.jsxs(lm,{children:[d.jsxs(nm,{children:[d.jsx(am,{children:d.jsx(em,{size:18})}),d.jsxs(im,{children:[d.jsx("h2",{children:"Select Your Grade"}),d.jsx("p",{children:"Pick a class to view the available subjects"})]})]}),d.jsxs(T6,{children:[d.jsxs(j6,{value:l,onChange:G=>{u(G.target.value),c("")},children:[d.jsx("option",{value:"",disabled:!0,children:"Select Grade"}),Object.keys(R).map(G=>d.jsx("option",{value:G,children:G},G))]}),l&&d.jsx(P4,{size:20,style:{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",color:it.success}})]})]}),d.jsxs(lm,{children:[d.jsxs(nm,{children:[d.jsx(am,{children:d.jsx(Di,{size:18})}),d.jsxs(im,{children:[d.jsx("h2",{children:"Choose a Subject"}),d.jsx("p",{children:"Click a teacher to open their profile"})]})]}),$.length?d.jsx(R6,{children:$.map(G=>{const L=q[G]||Di,A=o===G,J=R[l].subjects[G],B=Array.isArray(J)?J:[J];return d.jsxs(M6,{role:"button",tabIndex:0,"aria-pressed":A,$selected:A,onClick:()=>K(G),onKeyDown:V=>O(V,G),"aria-label":`Open ${G}`,children:[d.jsxs(z6,{children:[d.jsx("span",{children:G}),d.jsx("div",{className:"icon",children:d.jsx(L,{size:18})})]}),d.jsx(O6,{$selected:A,children:A?d.jsx(_6,{children:B.map(V=>d.jsx(A6,{$inSelected:!0,onClick:re=>{re.stopPropagation(),_(V)},onKeyDown:re=>{(re.key==="Enter"||re.key===" ")&&(re.preventDefault(),re.stopPropagation(),_(V))},children:V},V))}):d.jsxs("div",{style:{display:"flex",alignItems:"center",gap:6,color:"#475569",fontWeight:700,fontSize:".86rem"},children:[d.jsx("span",{children:"View teachers"})," ",d.jsx(F4,{size:16})]})})]},G)})}):d.jsxs(Jg,{style:{textAlign:"center",borderStyle:"dashed"},children:[d.jsx(Di,{size:36,color:"#94a3b8"}),d.jsx("p",{style:{color:it.subtext,fontWeight:600,marginTop:8},children:"Please select a grade to view subjects."})]})]})]})]})})]})}function rm(a){return Te({attr:{viewBox:"0 0 576 512"},child:[{tag:"path",attr:{d:"M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z"},child:[]}]})(a)}function ko(a){return Te({attr:{viewBox:"0 0 448 512"},child:[{tag:"path",attr:{d:"M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"},child:[]}]})(a)}function Il(a){return Te({attr:{viewBox:"0 0 640 512"},child:[{tag:"path",attr:{d:"M208 352c-2.39 0-4.78.35-7.06 1.09C187.98 357.3 174.35 360 160 360c-14.35 0-27.98-2.7-40.95-6.91-2.28-.74-4.66-1.09-7.05-1.09C49.94 352-.33 402.48 0 464.62.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38.33-62.14-49.94-112.62-112-112.62zm-48-32c53.02 0 96-42.98 96-96s-42.98-96-96-96-96 42.98-96 96 42.98 96 96 96zM592 0H208c-26.47 0-48 22.25-48 49.59V96c23.42 0 45.1 6.78 64 17.8V64h352v288h-64v-64H384v64h-76.24c19.1 16.69 33.12 38.73 39.69 64H592c26.47 0 48-22.25 48-49.59V49.59C640 22.25 618.47 0 592 0z"},child:[]}]})(a)}function N6(a){return Te({attr:{viewBox:"0 0 320 512"},child:[{tag:"path",attr:{d:"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"},child:[]}]})(a)}function om(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"},child:[]}]})(a)}function um(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"},child:[]}]})(a)}function sm(a){return Te({attr:{viewBox:"0 0 576 512"},child:[{tag:"path",attr:{d:"M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"},child:[]}]})(a)}function k6(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"},child:[]}]})(a)}function cm(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M504 255.531c.253 136.64-111.18 248.372-247.82 248.468-59.015.042-113.223-20.53-155.822-54.911-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184 0-101.705-82.311-184-184-184-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z"},child:[]}]})(a)}function fm(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M223.75 130.75L154.62 15.54A31.997 31.997 0 0 0 127.18 0H16.03C3.08 0-4.5 14.57 2.92 25.18l111.27 158.96c29.72-27.77 67.52-46.83 109.56-53.39zM495.97 0H384.82c-11.24 0-21.66 5.9-27.44 15.54l-69.13 115.21c42.04 6.56 79.84 25.62 109.56 53.38L509.08 25.18C516.5 14.57 508.92 0 495.97 0zM256 160c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm92.52 157.26l-37.93 36.96 8.97 52.22c1.6 9.36-8.26 16.51-16.65 12.09L256 393.88l-46.9 24.65c-8.4 4.45-18.25-2.74-16.65-12.09l8.97-52.22-37.93-36.96c-6.82-6.64-3.05-18.23 6.35-19.59l52.43-7.64 23.43-47.52c2.11-4.28 6.19-6.39 10.28-6.39 4.11 0 8.22 2.14 10.33 6.39l23.43 47.52 52.43 7.64c9.4 1.36 13.17 12.95 6.35 19.59z"},child:[]}]})(a)}function dm(a){return Te({attr:{viewBox:"0 0 448 512"},child:[{tag:"path",attr:{d:"M433.941 129.941l-83.882-83.882A48 48 0 0 0 316.118 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V163.882a48 48 0 0 0-14.059-33.941zM224 416c-35.346 0-64-28.654-64-64 0-35.346 28.654-64 64-64s64 28.654 64 64c0 35.346-28.654 64-64 64zm96-304.52V212c0 6.627-5.373 12-12 12H76c-6.627 0-12-5.373-12-12V108c0-6.627 5.373-12 12-12h228.52c3.183 0 6.235 1.264 8.485 3.515l3.48 3.48A11.996 11.996 0 0 1 320 111.48z"},child:[]}]})(a)}function Lo(a){return Te({attr:{viewBox:"0 0 576 512"},child:[{tag:"path",attr:{d:"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"},child:[]}]})(a)}function $o(a){return Te({attr:{viewBox:"0 0 352 512"},child:[{tag:"path",attr:{d:"M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"},child:[]}]})(a)}function L6(a){return Te({attr:{viewBox:"0 0 448 512"},child:[{tag:"path",attr:{d:"M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"},child:[]}]})(a)}const $6=Ft`
+  border: 1px solid
+    ${({$inSelected:a})=>a?"rgba(0,0,0,.12)":"#e2e8f0"};
+  transition: transform 0.12s ease, box-shadow 0.18s ease;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  }
+  &:focus-visible {
+    outline: 3px solid ${it.ring};
+    outline-offset: 2px;
+  }
+`;function D6(){const a=Af(),[l,u]=b.useState(""),[o,c]=b.useState(""),[f,p]=b.useState(""),[y,g]=b.useState(0),[m,x]=b.useState(!1),[S,E]=b.useState(0),D=["Achieve Excellence","Master Every Subject","Unlock Your Potential"];b.useEffect(()=>{const G=m?40:80,L=2e3,A=setTimeout(()=>{const J=D[y];if(!m&&S===J.length){setTimeout(()=>x(!0),L);return}if(m&&S===0){x(!1),g(B=>(B+1)%D.length);return}E(B=>B+(m?-1:1)),p(J.substring(0,S+(m?-1:1)))},G);return()=>clearTimeout(A)},[S,m,y]);const R={"Grade 9":{subjects:{English:["Ms. Priya Sharma","Mr. Vivek Sinha","Ms. Ritu Malhotra"],Mathematics:["Mr. Rajesh Kumar","Ms. Neha Gupta","Mr. Ankit Jain"],Science:["Ms. Anjali Mehta","Mr. Suresh Iyer","Ms. Pooja Khanna"],"Social Studies":["Siddharth Sir","Ms. Ananya Bose","Mr. Harish Nanda"],Hindi:["Ms. Kavita Reddy","Mr. Manoj Tiwari","Ms. Poonam Joshi"],"Computer Science":["Mr. Arvind Nair","Ms. Shruti Desai","Mr. Kunal Shah"]}},"Grade 10":{subjects:{English:["Ms. Sunita Verma","Mr. Ashish Bhatia","Ms. Riya Kapoor"],Mathematics:["Mr. Rohan Patel","Ms. Priyanka Das","Mr. Sanjay Kulkarni"],Science:["Ms. Anjali Mehta","Mr. Amit Chakraborty","Ms. Meera Nambiar"],"Social Studies":["Siddharth Sir","Ms. Nidhi Arora","Mr. Parth Ghosh"],Hindi:["Ms. Kavita Reddy","Mr. Ajay Sharma","Ms. Shalini Tripathi"],"Computer Science":["Mr. Arvind Nair","Ms. Tanvi Kulkarni","Mr. Rohit Menon"]}},"Grade 11":{subjects:{English:["Ms. Priya Sharma","Mr. Karan Malhotra","Ms. Deepa Rao"],Physics:["Mr. Nitin Agarwal","Ms. Rachna Bansal","Mr. Vivek Mishra"],Chemistry:["Ms. Sneha Kapoor","Mr. Aditya Mehta","Ms. Nupur Jain"],Biology:["Siddharth Sir","Ms. Radhika Sen","Mr. Mohan Pillai"],Mathematics:["Mr. Deepak Rao","Ms. Shreya Iyer","Mr. Varun Sethi"],"Computer Science":["Mr. Arvind Nair","Ms. Naina Khatri","Mr. Prateek Verma"]}},"Grade 12":{subjects:{English:["Ms. Sunita Verma","Mr. Aalok Trivedi","Ms. Garima Singh"],Physics:["Mr. Nitin Agarwal","Ms. Priti Saxena","Mr. Keshav Reddy"],Chemistry:["Ms. Sneha Kapoor","Mr. Rohan Mukherjee","Ms. Farah Qureshi"],Biology:["Siddharth Sir","Ms. Neelam Vaidya","Mr. Sameer Kulkarni"],Mathematics:["Mr. Deepak Rao","Ms. Ishita Shah","Mr. Yashwant Kumar"],"Computer Science":["Mr. Arvind Nair","Ms. Pallavi Menon","Mr. Siddharth Jain"]}}},q={English:Di,Mathematics:K4,Science:I1,Physics:q4,Chemistry:I1,Biology:tm,"Social Studies":tm,Hindi:o6,"Computer Science":e6},$=l?Object.keys(R[l].subjects):[],K=G=>c(G),O=(G,L)=>{(G.key==="Enter"||G.key===" ")&&(G.preventDefault(),K(L))},_=G=>{!l||!o||a("/instalearn/teacher",{state:{grade:l,subject:o,teacher:G}})};return d.jsxs(g6,{children:[d.jsx(Zc,{$color:"rgba(255,255,255,0.16)",$size:520,$top:"-12%",$right:"-6%",$duration:8,$delay:0}),d.jsx(Zc,{$color:"rgba(255,255,255,0.1)",$size:640,$bottom:"-16%",$left:"-8%",$duration:10,$delay:3}),d.jsx(Zc,{$color:"rgba(255,255,255,0.12)",$size:420,$top:"42%",$left:"48%",$duration:12,$delay:6}),[...Array(7)].map((G,L)=>d.jsx(v6,{$duration:9+L*2,$delay:L*.7,style:{left:`${10+L*12}%`,top:`${18+L*9}%`},children:L%2?d.jsx(em,{size:30,color:"rgba(255,255,255,0.5)"}):d.jsx(c6,{size:30,color:"rgba(255,255,255,0.5)"})},L)),d.jsx(y6,{children:d.jsxs(b6,{children:[d.jsx(S6,{children:d.jsx(w6,{children:d.jsx(E6,{children:d.jsx(C6,{children:f})})})}),d.jsxs(x6,{children:[d.jsxs(lm,{children:[d.jsxs(nm,{children:[d.jsx(am,{children:d.jsx(em,{size:18})}),d.jsxs(im,{children:[d.jsx("h2",{children:"Select Your Grade"}),d.jsx("p",{children:"Pick a class to view the available subjects"})]})]}),d.jsxs(T6,{children:[d.jsxs(j6,{value:l,onChange:G=>{u(G.target.value),c("")},children:[d.jsx("option",{value:"",disabled:!0,children:"Select Grade"}),Object.keys(R).map(G=>d.jsx("option",{value:G,children:G},G))]}),l&&d.jsx(P4,{size:20,style:{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",color:it.success}})]})]}),d.jsxs(lm,{children:[d.jsxs(nm,{children:[d.jsx(am,{children:d.jsx(Di,{size:18})}),d.jsxs(im,{children:[d.jsx("h2",{children:"Choose a Subject"}),d.jsx("p",{children:"Click a teacher to open their profile"})]})]}),$.length?d.jsx(R6,{children:$.map(G=>{const L=q[G]||Di,A=o===G,J=R[l].subjects[G],B=Array.isArray(J)?J:[J];return d.jsxs(M6,{role:"button",tabIndex:0,"aria-pressed":A,$selected:A,onClick:()=>K(G),onKeyDown:V=>O(V,G),"aria-label":`Open ${G}`,children:[d.jsxs(z6,{children:[d.jsx("span",{children:G}),d.jsx("div",{className:"icon",children:d.jsx(L,{size:18})})]}),d.jsx(O6,{$selected:A,children:A?d.jsx(_6,{children:B.map(V=>d.jsx(A6,{$inSelected:!0,onClick:re=>{re.stopPropagation(),_(V)},onKeyDown:re=>{(re.key==="Enter"||re.key===" ")&&(re.preventDefault(),re.stopPropagation(),_(V))},children:V},V))}):d.jsxs("div",{style:{display:"flex",alignItems:"center",gap:6,color:"#475569",fontWeight:700,fontSize:".86rem"},children:[d.jsx("span",{children:"View teachers"})," ",d.jsx(F4,{size:16})]})})]},G)})}):d.jsxs(Jg,{style:{display:"flex",flexDirection:"column",textAlign:"center",borderStyle:"dashed",alignItems:"center",justifyContent:"center"},children:[d.jsx(Di,{size:36,color:"#94a3b8"}),d.jsx("p",{style:{color:it.subtext,fontWeight:600,marginTop:8},children:"Please select a grade to view subjects."})]})]})]})]})})]})}function rm(a){return Te({attr:{viewBox:"0 0 576 512"},child:[{tag:"path",attr:{d:"M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z"},child:[]}]})(a)}function ko(a){return Te({attr:{viewBox:"0 0 448 512"},child:[{tag:"path",attr:{d:"M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"},child:[]}]})(a)}function Il(a){return Te({attr:{viewBox:"0 0 640 512"},child:[{tag:"path",attr:{d:"M208 352c-2.39 0-4.78.35-7.06 1.09C187.98 357.3 174.35 360 160 360c-14.35 0-27.98-2.7-40.95-6.91-2.28-.74-4.66-1.09-7.05-1.09C49.94 352-.33 402.48 0 464.62.14 490.88 21.73 512 48 512h224c26.27 0 47.86-21.12 48-47.38.33-62.14-49.94-112.62-112-112.62zm-48-32c53.02 0 96-42.98 96-96s-42.98-96-96-96-96 42.98-96 96 42.98 96 96 96zM592 0H208c-26.47 0-48 22.25-48 49.59V96c23.42 0 45.1 6.78 64 17.8V64h352v288h-64v-64H384v64h-76.24c19.1 16.69 33.12 38.73 39.69 64H592c26.47 0 48-22.25 48-49.59V49.59C640 22.25 618.47 0 592 0z"},child:[]}]})(a)}function N6(a){return Te({attr:{viewBox:"0 0 320 512"},child:[{tag:"path",attr:{d:"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"},child:[]}]})(a)}function om(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm92.49,313h0l-20,25a16,16,0,0,1-22.49,2.5h0l-67-49.72a40,40,0,0,1-15-31.23V112a16,16,0,0,1,16-16h32a16,16,0,0,1,16,16V256l58,42.5A16,16,0,0,1,348.49,321Z"},child:[]}]})(a)}function um(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"},child:[]}]})(a)}function sm(a){return Te({attr:{viewBox:"0 0 576 512"},child:[{tag:"path",attr:{d:"M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"},child:[]}]})(a)}function k6(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"},child:[]}]})(a)}function cm(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M504 255.531c.253 136.64-111.18 248.372-247.82 248.468-59.015.042-113.223-20.53-155.822-54.911-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184 0-101.705-82.311-184-184-184-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z"},child:[]}]})(a)}function fm(a){return Te({attr:{viewBox:"0 0 512 512"},child:[{tag:"path",attr:{d:"M223.75 130.75L154.62 15.54A31.997 31.997 0 0 0 127.18 0H16.03C3.08 0-4.5 14.57 2.92 25.18l111.27 158.96c29.72-27.77 67.52-46.83 109.56-53.39zM495.97 0H384.82c-11.24 0-21.66 5.9-27.44 15.54l-69.13 115.21c42.04 6.56 79.84 25.62 109.56 53.38L509.08 25.18C516.5 14.57 508.92 0 495.97 0zM256 160c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm92.52 157.26l-37.93 36.96 8.97 52.22c1.6 9.36-8.26 16.51-16.65 12.09L256 393.88l-46.9 24.65c-8.4 4.45-18.25-2.74-16.65-12.09l8.97-52.22-37.93-36.96c-6.82-6.64-3.05-18.23 6.35-19.59l52.43-7.64 23.43-47.52c2.11-4.28 6.19-6.39 10.28-6.39 4.11 0 8.22 2.14 10.33 6.39l23.43 47.52 52.43 7.64c9.4 1.36 13.17 12.95 6.35 19.59z"},child:[]}]})(a)}function dm(a){return Te({attr:{viewBox:"0 0 448 512"},child:[{tag:"path",attr:{d:"M433.941 129.941l-83.882-83.882A48 48 0 0 0 316.118 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V163.882a48 48 0 0 0-14.059-33.941zM224 416c-35.346 0-64-28.654-64-64 0-35.346 28.654-64 64-64s64 28.654 64 64c0 35.346-28.654 64-64 64zm96-304.52V212c0 6.627-5.373 12-12 12H76c-6.627 0-12-5.373-12-12V108c0-6.627 5.373-12 12-12h228.52c3.183 0 6.235 1.264 8.485 3.515l3.48 3.48A11.996 11.996 0 0 1 320 111.48z"},child:[]}]})(a)}function Lo(a){return Te({attr:{viewBox:"0 0 576 512"},child:[{tag:"path",attr:{d:"M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"},child:[]}]})(a)}function $o(a){return Te({attr:{viewBox:"0 0 352 512"},child:[{tag:"path",attr:{d:"M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"},child:[]}]})(a)}function L6(a){return Te({attr:{viewBox:"0 0 448 512"},child:[{tag:"path",attr:{d:"M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"},child:[]}]})(a)}const $6=Ft`
   from { opacity: 0; transform: translateY(32px); }
   to { opacity: 1; transform: translateY(0); }
 `,Fg=Ft`
