@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import ReactPlayer from "react-player";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
@@ -20,10 +19,13 @@ const PlayerWrapper = styled.div`
   padding-top: 56.25%; /* 16:9 Aspect Ratio */
   background: #000;
 
-  .react-player {
+  video {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* fill the frame nicely */
+    display: block;
   }
 `;
 
@@ -85,10 +87,13 @@ export default function VideoClipCard({
   onLikeChange,
   onBookmarkChange,
 }) {
-  const { title, description, vedioClipSrc } = data || {};
+  // Accept either "videoClipSrc" (preferred) or legacy "vedioClipSrc"
+  const src = data?.videoClipSrc || data?.vedioClipSrc;
+  const { title, description, poster } = data || {};
 
   const [liked, setLiked] = useState(likedDefault);
   const [saved, setSaved] = useState(savedDefault);
+  const videoRef = useRef(null);
 
   const toggleLike = () => {
     const next = !liked;
@@ -102,20 +107,37 @@ export default function VideoClipCard({
     onBookmarkChange && onBookmarkChange(next);
   };
 
-  if (!vedioClipSrc) return null;
+  // Best-effort auto-play for browsers that gate autoplay
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    // Try to play; ignore failures (e.g., user gesture required)
+    const tryPlay = async () => {
+      try {
+        await el.play();
+      } catch {
+        // If autoplay is blocked, leave the controls visible for user to start
+      }
+    };
+    tryPlay();
+  }, [src]);
+
+  if (!src) return null;
 
   return (
     <Card>
       <PlayerWrapper>
-        <ReactPlayer
-          className="react-player"
-          url={vedioClipSrc}
-          width="100%"
-          height="100%"
-          controls={true}
-          playing={true} // Auto-play
-          muted={true}   // Muted
-          loop={true}    // Loop video
+        <video
+          ref={videoRef}
+          src={src}
+          controls
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={poster}
+          aria-label={title || "Video clip"}
         />
       </PlayerWrapper>
 
