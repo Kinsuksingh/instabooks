@@ -302,8 +302,8 @@ export default function TeacherProfile() {
 
   const plans = [
     { key: "basic", name: "Basic", price: "₹0", desc: "Demo access: 3 lessons" },
-    { key: "pro", name: "Pro", price: "₹499", desc: "Monthly: full library" },
-    { key: "team", name: "Team", price: "₹1,999", desc: "Up to 10 students" },
+    { key: "pro", name: "Pro", price: "₹99", desc: "Monthly: full library" },
+    { key: "team", name: "Team", price: "₹1,99", desc: "Up to 10 students" },
   ];
 
   const lockedBannerHidden = isJoined;
