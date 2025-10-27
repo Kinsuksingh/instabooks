@@ -13,98 +13,43 @@ import {
   Globe,
   Languages,
   Code,
+  ChevronRight,
 } from "lucide-react";
 
-// ---------- Animations ----------
+/* ---------- Design tokens ---------- */
+const ui = {
+  bgGrad: "linear-gradient(135deg, #8be3f5 0%, #9fefd0 50%, #b5f8b5 100%)",
+  glass: "rgba(255,255,255,0.94)",
+  border: "rgba(255,255,255,0.9)",
+  text: "#0f172a",
+  subtext: "#64748b",
+  primary: "#0EA5E9",
+  success: "#22c55e",
+  successDark: "#16a34a",
+  shadow: "0 20px 60px rgba(0,0,0,0.15)",
+  ring: "rgba(14,165,233,0.12)",
+};
+
 const float = keyframes`
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   25% { transform: translate(30px, -30px) rotate(5deg); }
   50% { transform: translate(-20px, -50px) rotate(-5deg); }
   75% { transform: translate(40px, -20px) rotate(3deg); }
 `;
+const pulseGlow = keyframes`0%,100%{opacity:.2}50%{opacity:.4}`;
+const blink = keyframes`0%,49%{opacity:1}50%,100%{opacity:0}`;
 
-const pulseGlow = keyframes`
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.4; }
-`;
-
-const blink = keyframes`
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-`;
-
-// ---------- Styled Components ----------
+/* ---------- Layout ---------- */
 const Container = styled.div`
-  height: 100%;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #8be3f5 0%, #9fefd0 50%, #b5f8b5 100%);
-  font-family: "Inter", sans-serif;
+  background: ${ui.bgGrad};
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   padding: 1rem;
-
-  @media (min-width: 768px) {
-    padding: 1rem;
-  }
-`;
-
-const CursorBlink = styled.span`
-  &::after {
-    content: "|";
-    animation: ${blink} 1s infinite;
-    margin-left: 4px;
-  }
-`;
-
-const GlassCard = styled.div`
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  border-radius: 1.5rem;
-
-  @media (min-width: 768px) {
-    border-radius: 1rem;
-  }
-`;
-
-const GlassCardHover = styled(GlassCard)`
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const HeroSection = styled.div`
-  text-align: center;
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    margin-bottom: 3rem;
-    gap: 1.5rem;
-  }
-`;
-
-const HeroText = styled.h1`
-  font-size: clamp(1.5rem, 6vw, 3rem);
-  font-weight: 900;
-  line-height: 1.2;
-  padding: 0 1rem;
-`;
-
-const GradientText = styled.span`
-  background: green;
-  -webkit-background-clip: text;
-  color: transparent;
-  font-style: italic;
-  font-size: 30px;
 `;
 
 const BackgroundCircle = styled.div`
@@ -117,25 +62,20 @@ const BackgroundCircle = styled.div`
   left: ${({ $left }) => $left};
   bottom: ${({ $bottom }) => $bottom};
   right: ${({ $right }) => $right};
+  filter: blur(2px);
   animation: ${pulseGlow} ${({ $duration }) => $duration}s infinite ease-in-out;
   animation-delay: ${({ $delay }) => $delay}s;
   display: none;
-
-  @media (min-width: 768px) {
-    display: block;
-  }
+  @media (min-width: 768px) { display: block; }
 `;
 
 const FloatingIcon = styled.div`
   position: absolute;
-  opacity: 0.15;
+  opacity: 0.18;
   animation: ${float} ${({ $duration }) => $duration}s infinite ease-in-out;
   animation-delay: ${({ $delay }) => $delay}s;
   display: none;
-
-  @media (min-width: 768px) {
-    display: block;
-  }
+  @media (min-width: 768px) { display: block; }
 `;
 
 const PageWrapper = styled.div`
@@ -148,316 +88,228 @@ const PageWrapper = styled.div`
 
 const CardWrapper = styled.div`
   width: 100%;
-  max-width: 600px;
-
-  @media (min-width: 768px) {
-    max-width: 800px;
-  }
+  max-width: 980px;
 `;
 
+const GlassCard = styled.div`
+  background: ${ui.glass};
+  backdrop-filter: blur(18px);
+  border: 1px solid ${ui.border};
+  box-shadow: ${ui.shadow};
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  @media (min-width: 768px) { border-radius: 1rem; padding: 2rem; }
+`;
+
+const Section = styled(GlassCard)`
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+`;
+
+/* ---------- Hero ---------- */
+const Hero = styled.div`
+  text-align: center;
+  margin-bottom: 1.25rem;
+  display: grid;
+  gap: .75rem;
+  justify-items: center;
+  @media (min-width: 768px) { margin-bottom: 2rem; gap: 1rem; }
+`;
+const Title = styled.h1`
+  font-size: clamp(1.4rem, 5.2vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: ${ui.text};
+  margin: 0;
+`;
+const GradientText = styled.span`
+  background: linear-gradient(135deg, ${ui.primary}, ${ui.success});
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: .2px;
+`;
+const CursorBlink = styled.span`
+  &::after { content: "|"; animation: ${blink} 1s infinite; margin-left: 4px; }
+`;
+
+/* ---------- Headers ---------- */
 const SectionHeader = styled.div`
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  align-items: center;
+  display: flex; gap: .75rem; align-items: center;
+`;
+const IconWrap = styled.div`
+  width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  background: linear-gradient(135deg, ${ui.primary} 0%, ${ui.success} 100%);
+  display: grid; place-items: center; color: white; flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(14,165,233,.25);
+`;
+const HeaderText = styled.div`
+  display: grid; gap: .1rem;
+  h2{ margin:0; font-size:1.1rem; color:#0f172a; font-weight:800; }
+  p{ margin:0; font-size:.85rem; color:${ui.subtext}; }
 `;
 
-const IconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 10rem;
-  background: ${({ $gradient }) => $gradient};
-  box-shadow: ${({ $shadow }) => $shadow};
-  flex-shrink: 0;
-  margin-bottom: 1rem;
-
-  @media (min-width: 768px) {
-    width: 3rem;
-    height: 3rem;
-  }
-`;
-
-const HeaderText = styled.h2`
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #1e293b;
-
-  @media (min-width: 768px) {
-    font-size: 1.25rem;
-  }
-`;
-
-const HeaderSubText = styled.p`
-  font-size: 0.8rem;
-  color: #64748b;
-
-  @media (min-width: 768px) {
-    font-size: 0.875rem;
-  }
-`;
-
+/* ---------- Inputs ---------- */
+const GradeSelectWrap = styled.div` position: relative; `;
 const GradeSelect = styled.select`
   width: 100%;
-  padding: 0.875rem 2.5rem 0.875rem 0.875rem;
-  border-radius: 0.75rem;
+  padding: 1rem 2.75rem 1rem 1rem;
+  border-radius: .9rem;
   border: 2px solid #e2e8f0;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1e293b;
-  background: white;
-  appearance: none;
-  transition: all 0.2s;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-  }
-
-  @media (min-width: 768px) {
-    padding: 1rem 2.5rem 1rem 1rem;
-  }
+  font-size: 1rem; font-weight: 600; color: ${ui.text};
+  background: white; appearance: none; cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  &:focus { outline: none; border-color: ${ui.primary}; box-shadow: 0 0 0 6px ${ui.ring}; }
 `;
 
-const GradeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
+const Row = styled.div` display: grid; gap: 1.25rem; `;
 
+/* ---------- Subjects ---------- */
 const SubjectsGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: grid; gap: .9rem; grid-template-columns: 1fr;
+  @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
 `;
 
-// Transient prop $visible avoids passing to DOM
-export const ContinueButtonCard = styled.button`
-  width: 100%;
-  margin-top: 0.6rem;
-  padding: 0.9rem 1rem;
-  border: 0;
-  border-radius: 0.875rem;
-  font-weight: 700;
-  font-size: 0.95rem;
-  display: ${({ $visible }) => ($visible ? "flex" : "none")};
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+/* NOTE: Selected state now uses your required gradient AND switches text to BLACK */
+const SubjectCard = styled.div`
+  border-radius: 1rem;
+  padding: 1.1rem 1.1rem 0.9rem;
+  background: #fff;
+  border: 2px solid #e2e8f0;
   cursor: pointer;
-
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  color: #fff;
-  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.35);
-
-  transition: transform 120ms ease, box-shadow 200ms ease, filter 120ms ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 30px rgba(22, 163, 74, 0.45);
-  }
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
-    filter: saturate(0.95);
-  }
-  &:focus-visible {
-    outline: 3px solid rgba(34, 197, 94, 0.35);
-    outline-offset: 2px;
-    border-radius: 1rem;
-  }
-`;
-
-/** CHANGED: CardButton is now a DIV (not a button) to avoid nesting a button inside a button */
-const CardButton = styled.div`
-  border-radius: 0.875rem;
-  padding: 1.25rem;
-  font-weight: 600;
-  font-size: 1rem;
   position: relative;
   overflow: hidden;
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  border: 2px solid transparent;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s, background 0.18s, color 0.18s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: ${ui.primary};
+    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.15);
+  }
 
   ${({ $selected }) =>
-    $selected
-      ? `
-    background: linear-gradient(180deg, #74dec1 0%, #28A745 50%, #0E7C3F 100%);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-    transform: scale(1.01);
-  `
-      : `
-    background: white;
-    color: #334155;
-    border-color: #e2e8f0;
-
-    &:hover {
-      background: linear-gradient(180deg, #E8FBF0 0%, #CFF6DF 100%);
-      color: black;
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(240, 147, 251, 0.3);
-    }
+    $selected &&
+    `
+    background: linear-gradient(135deg, #8be3f5 0%, #9fefd0 50%, #b5f8b5 100%);
+    color: #000;
+    border-color: rgba(0,0,0,0.15);
+    box-shadow: 0 12px 36px rgba(250, 227, 140, 0.35);
+    transform: translateY(-1px);
   `}
-
-  @media (min-width: 768px) {
-    padding: 1.5rem;
-  }
 `;
 
-const EmptySubjectsCard = styled.div`
-  padding: 2.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 2px solid lightgray;
-  border-radius: 1rem;
-  svg {
-    margin-bottom: 1rem;
-    opacity: 1.5;
-  }
 
-  p {
-    font-size: 0.9rem;
-    color: #64748b;
-    font-weight: 500;
-  }
-
-  @media (min-width: 768px) {
-    padding: 3rem;
-  }
-`;
-
-const TeacherName = styled.div`
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  width: 100%;
-  font-size: 0.875rem;
-  opacity: 0.95;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`;
-
-// Inline row for subject + right-side icons
 const SubjectRow = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .75rem;
+  span { font-weight: 800; letter-spacing: .2px; }
+  .icon { opacity: .9; }
 `;
 
-const RightIcons = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+/* Selected section shows dashed separator; color adapts */
+const TeachersWrap = styled.div`
+  margin-top: .35rem; padding-top: .5rem;
+  border-top: 1px dashed rgba(0,0,0,.12);
+  ${({ $selected }) => $selected && `border-top-color: rgba(0,0,0,.35);`}
 `;
 
-// ---------- Main Component ----------
+const Chips = styled.div` display:flex; flex-wrap: wrap; gap:.4rem; `;
+const Chip = styled.button`
+  border: 0;
+  cursor: pointer;
+  font-size: .78rem; font-weight: 800; padding: .38rem .6rem; border-radius: .7rem;
+  background: ${({ $inSelected }) => ($inSelected ? "rgba(255,255,255,.9)" : "#f1f5f9")};
+  color: ${({ $inSelected }) => ($inSelected ? "#0f172a" : ui.text)};
+  box-shadow: ${({ $inSelected }) => ($inSelected ? "0 2px 6px rgba(0,0,0,.12)" : "none")};
+  border: 1px solid ${({ $inSelected }) => ($inSelected ? "rgba(0,0,0,.12)" : "#e2e8f0")};
+  transition: transform .12s ease, box-shadow .18s ease;
+  &:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,.12); }
+  &:focus-visible { outline: 3px solid ${ui.ring}; outline-offset: 2px; }
+`;
+
+/* ---------- Component ---------- */
 export default function InstalearnApp() {
   const navigate = useNavigate();
   const [selectedGrade, setSelectedGrade] = useState("");
-  const [selectedBookType, setSelectedBookType] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [animatedText, setAnimatedText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
 
-  const words = [
-    "Achieve Excellence",
-    "Master Every Subject",
-    "Unlock Your Potential",
-  ];
+  const words = ["Achieve Excellence", "Master Every Subject", "Unlock Your Potential"];
 
   useEffect(() => {
     const typingSpeed = isDeleting ? 40 : 80;
     const pauseDelay = 2000;
 
     const timer = setTimeout(() => {
-      const currentWord = words[wordIndex];
+      const current = words[wordIndex];
 
-      if (!isDeleting && charIndex === currentWord.length) {
+      if (!isDeleting && charIndex === current.length) {
         setTimeout(() => setIsDeleting(true), pauseDelay);
         return;
       }
-
       if (isDeleting && charIndex === 0) {
         setIsDeleting(false);
-        setWordIndex((prev) => (prev + 1) % words.length);
+        setWordIndex((p) => (p + 1) % words.length);
         return;
       }
-
-      setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
-      setAnimatedText(
-        currentWord.substring(0, charIndex + (isDeleting ? -1 : 1))
-      );
+      setCharIndex((p) => p + (isDeleting ? -1 : 1));
+      setAnimatedText(current.substring(0, charIndex + (isDeleting ? -1 : 1)));
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  });
+  }, [charIndex, isDeleting, wordIndex]);
 
+  /* ---------- Data (multiple teachers) ---------- */
   const grades = {
     "Grade 9": {
       subjects: {
-        English: "Ms. Priya Sharma",
-        Mathematics: "Mr. Rajesh Kumar",
-        Science: "Ms. Anjali Mehta",
-        "Social Studies": "Siddharth Sir",
-        Hindi: "Ms. Kavita Reddy",
-        "Computer Science": "Mr. Arvind Nair",
+        English: ["Ms. Priya Sharma", "Mr. Vivek Sinha", "Ms. Ritu Malhotra"],
+        Mathematics: ["Mr. Rajesh Kumar", "Ms. Neha Gupta", "Mr. Ankit Jain"],
+        Science: ["Ms. Anjali Mehta", "Mr. Suresh Iyer", "Ms. Pooja Khanna"],
+        "Social Studies": ["Siddharth Sir", "Ms. Ananya Bose", "Mr. Harish Nanda"],
+        Hindi: ["Ms. Kavita Reddy", "Mr. Manoj Tiwari", "Ms. Poonam Joshi"],
+        "Computer Science": ["Mr. Arvind Nair", "Ms. Shruti Desai", "Mr. Kunal Shah"],
       },
     },
     "Grade 10": {
       subjects: {
-        English: "Ms. Sunita Verma",
-        Mathematics: "Mr. Rohan Patel",
-        Science: "Ms. Anjali Mehta",
-        "Social Studies": "Siddharth Sir",
-        Hindi: "Ms. Kavita Reddy",
-        "Computer Science": "Mr. Arvind Nair",
+        English: ["Ms. Sunita Verma", "Mr. Ashish Bhatia", "Ms. Riya Kapoor"],
+        Mathematics: ["Mr. Rohan Patel", "Ms. Priyanka Das", "Mr. Sanjay Kulkarni"],
+        Science: ["Ms. Anjali Mehta", "Mr. Amit Chakraborty", "Ms. Meera Nambiar"],
+        "Social Studies": ["Siddharth Sir", "Ms. Nidhi Arora", "Mr. Parth Ghosh"],
+        Hindi: ["Ms. Kavita Reddy", "Mr. Ajay Sharma", "Ms. Shalini Tripathi"],
+        "Computer Science": ["Mr. Arvind Nair", "Ms. Tanvi Kulkarni", "Mr. Rohit Menon"],
       },
     },
     "Grade 11": {
       subjects: {
-        English: "Ms. Priya Sharma",
-        Physics: "Mr. Nitin Agarwal",
-        Chemistry: "Ms. Sneha Kapoor",
-        Biology: "Siddharth Sir",
-        Mathematics: "Mr. Deepak Rao",
-        "Computer Science": "Mr. Arvind Nair",
+        English: ["Ms. Priya Sharma", "Mr. Karan Malhotra", "Ms. Deepa Rao"],
+        Physics: ["Mr. Nitin Agarwal", "Ms. Rachna Bansal", "Mr. Vivek Mishra"],
+        Chemistry: ["Ms. Sneha Kapoor", "Mr. Aditya Mehta", "Ms. Nupur Jain"],
+        Biology: ["Siddharth Sir", "Ms. Radhika Sen", "Mr. Mohan Pillai"],
+        Mathematics: ["Mr. Deepak Rao", "Ms. Shreya Iyer", "Mr. Varun Sethi"],
+        "Computer Science": ["Mr. Arvind Nair", "Ms. Naina Khatri", "Mr. Prateek Verma"],
       },
     },
     "Grade 12": {
       subjects: {
-        English: "Ms. Sunita Verma",
-        Physics: "Mr. Nitin Agarwal",
-        Chemistry: "Ms. Sneha Kapoor",
-        Biology: "Siddharth Sir",
-        Mathematics: "Mr. Deepak Rao",
-        "Computer Science": "Mr. Arvind Nair",
+        English: ["Ms. Sunita Verma", "Mr. Aalok Trivedi", "Ms. Garima Singh"],
+        Physics: ["Mr. Nitin Agarwal", "Ms. Priti Saxena", "Mr. Keshav Reddy"],
+        Chemistry: ["Ms. Sneha Kapoor", "Mr. Rohan Mukherjee", "Ms. Farah Qureshi"],
+        Biology: ["Siddharth Sir", "Ms. Neelam Vaidya", "Mr. Sameer Kulkarni"],
+        Mathematics: ["Mr. Deepak Rao", "Ms. Ishita Shah", "Mr. Yashwant Kumar"],
+        "Computer Science": ["Mr. Arvind Nair", "Ms. Pallavi Menon", "Mr. Siddharth Jain"],
       },
     },
   };
 
-  // Map each subject to an icon
   const subjectIcons = {
     English: BookOpen,
     Mathematics: Calculator,
@@ -470,17 +322,9 @@ export default function InstalearnApp() {
     "Computer Science": Code,
   };
 
-  const handleContinue = () => {
-    if (selectedGrade && selectedBookType) {
-      navigate("/instalearn/teacher");
-      console.log(`Selected: ${selectedGrade} - ${selectedBookType}`);
-    }
-  };
+  const currentSubjects = selectedGrade ? Object.keys(grades[selectedGrade].subjects) : [];
 
-  const onCardActivate = (subject) => {
-    setSelectedBookType(subject);
-  };
-
+  const onCardActivate = (subject) => setSelectedSubject(subject);
   const onCardKeyDown = (e, subject) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -488,151 +332,91 @@ export default function InstalearnApp() {
     }
   };
 
-  const currentSubjects = selectedGrade
-    ? Object.keys(grades[selectedGrade].subjects)
-    : [];
+  // NEW: clicking a teacher chip redirects immediately to teacher profile
+  const onTeacherClick = (teacher) => {
+    if (!selectedGrade || !selectedSubject) return;
+    navigate("/instalearn/teacher", {
+      state: {
+        grade: selectedGrade,
+        subject: selectedSubject,
+        teacher,
+      },
+    });
+  };
 
   return (
     <Container>
-      {/* Background Circles */}
-      <BackgroundCircle
-        $color="rgba(255, 255, 255, 0.15)"
-        $size={500}
-        $top="-10%"
-        $right="-5%"
-        $duration={8}
-        $delay={0}
-      />
-      <BackgroundCircle
-        $color="rgba(255, 255, 255, 0.1)"
-        $size={600}
-        $bottom="-15%"
-        $left="-5%"
-        $duration={10}
-        $delay={3}
-      />
-      <BackgroundCircle
-        $color="rgba(255, 255, 255, 0.12)"
-        $size={400}
-        $top="40%"
-        $left="50%"
-        $duration={12}
-        $delay={6}
-      />
+      {/* Background accents */}
+      <BackgroundCircle $color="rgba(255,255,255,0.16)" $size={520} $top="-12%" $right="-6%" $duration={8} $delay={0}/>
+      <BackgroundCircle $color="rgba(255,255,255,0.1)"  $size={640} $bottom="-16%" $left="-8%" $duration={10} $delay={3}/>
+      <BackgroundCircle $color="rgba(255,255,255,0.12)" $size={420} $top="42%"  $left="48%" $duration={12} $delay={6}/>
 
-      {/* Floating Icons */}
-      {[...Array(8)].map((_, i) => (
-        <FloatingIcon
-          key={i}
-          $duration={8 + i * 2}
-          $delay={i * 0.8}
-          style={{ left: `${10 + i * 12}%`, top: `${15 + i * 11}%` }}
-        >
-          {i % 3 === 0 ? (
-            <BookOpen size={32} color="rgba(255,255,255,0.4)" />
-          ) : i % 3 === 1 ? (
-            <GraduationCap size={32} color="rgba(255,255,255,0.4)" />
-          ) : (
-            <Sparkles size={32} color="rgba(255,255,255,0.4)" />
-          )}
+      {[...Array(7)].map((_, i) => (
+        <FloatingIcon key={i} $duration={9 + i * 2} $delay={i * .7} style={{ left: `${10 + i * 12}%`, top: `${18 + i * 9}%` }}>
+          {i % 2 ? <GraduationCap size={30} color="rgba(255,255,255,0.5)" /> : <Sparkles size={30} color="rgba(255,255,255,0.5)" />}
         </FloatingIcon>
       ))}
 
       <PageWrapper>
         <CardWrapper>
-          <HeroSection>
-            <HeroText>
-              <GradientText>
-                <CursorBlink>{animatedText}</CursorBlink>
-              </GradientText>
-            </HeroText>
-          </HeroSection>
+          <Hero>
+            <Title>
+              <GradientText><CursorBlink>{animatedText}</CursorBlink></GradientText>
+            </Title>
+          </Hero>
 
-          <GlassCardHover
-            style={{
-              padding: "1.5rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "2rem",
-            }}
-          >
-            {/* Grade Selection */}
-            <GradeContainer>
+          <Section>
+            {/* Grade */}
+            <Row>
               <SectionHeader>
-                <IconWrapper
-                  $gradient="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-                  $shadow="0 8px 24px rgba(102,126,234,0.3)"
-                >
-                  <GraduationCap size={20} color="white" />
-                </IconWrapper>
-                <div>
-                  <HeaderText>Select Your Grade</HeaderText>
-                </div>
+                <IconWrap><GraduationCap size={18} /></IconWrap>
+                <HeaderText>
+                  <h2>Select Your Grade</h2>
+                  <p>Pick a class to view the available subjects</p>
+                </HeaderText>
               </SectionHeader>
 
-              <div style={{ position: "relative" }}>
+              <GradeSelectWrap>
                 <GradeSelect
                   value={selectedGrade}
-                  onChange={(e) => {
-                    setSelectedGrade(e.target.value);
-                    setSelectedBookType("");
-                  }}
+                  onChange={(e) => { setSelectedGrade(e.target.value); setSelectedSubject(""); }}
                 >
-                  <option value="" disabled>
-                    Select Grade
-                  </option>
-                  {Object.keys(grades).map((grade) => (
-                    <option key={grade} value={grade}>
-                      {grade}
-                    </option>
+                  <option value="" disabled>Select Grade</option>
+                  {Object.keys(grades).map((g) => (
+                    <option key={g} value={g}>{g}</option>
                   ))}
                 </GradeSelect>
                 {selectedGrade && (
-                  <CheckCircle
-                    size={20}
-                    style={{
-                      position: "absolute",
-                      right: "12px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      color: "#10b981",
-                    }}
-                  />
+                  <CheckCircle size={20} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", color: ui.success }} />
                 )}
-              </div>
-            </GradeContainer>
+              </GradeSelectWrap>
+            </Row>
 
-            {/* Subject Selection */}
-            <GradeContainer>
+            {/* Subjects */}
+            <Row>
               <SectionHeader>
-                <IconWrapper
-                  $gradient="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-                  $shadow="0 8px 24px rgba(240,147,251,0.3)"
-                >
-                  <BookOpen size={20} color="white" />
-                </IconWrapper>
-                <div>
-                  <HeaderText>Choose Your Subject</HeaderText>
-                  <HeaderSubText>
-                    Click a subject to reveal the teacher name.
-                  </HeaderSubText>
-                </div>
+                <IconWrap><BookOpen size={18} /></IconWrap>
+                <HeaderText>
+                  <h2>Choose a Subject</h2>
+                  <p>Click a teacher to open their profile</p>
+                </HeaderText>
               </SectionHeader>
 
-              {currentSubjects.length === 0 ? (
-                <EmptySubjectsCard>
-                  <BookOpen size={40} color="#94a3b8" />
-                  <p>Please select a grade to view available subjects</p>
-                </EmptySubjectsCard>
+              {!currentSubjects.length ? (
+                <GlassCard style={{ textAlign: "center", borderStyle: "dashed" }}>
+                  <BookOpen size={36} color="#94a3b8" />
+                  <p style={{ color: ui.subtext, fontWeight: 600, marginTop: 8 }}>Please select a grade to view subjects.</p>
+                </GlassCard>
               ) : (
                 <SubjectsGrid>
                   {currentSubjects.map((subject) => {
-                    const teacher = grades[selectedGrade].subjects[subject];
-                    const isSelected = selectedBookType === subject;
                     const Icon = subjectIcons[subject] || BookOpen;
+                    const isSelected = selectedSubject === subject;
+                    const list = grades[selectedGrade].subjects[subject];
+                    const teachers = Array.isArray(list) ? list : [list];
 
                     return (
-                      <CardButton
+                      <SubjectCard
                         key={subject}
                         role="button"
                         tabIndex={0}
@@ -640,36 +424,46 @@ export default function InstalearnApp() {
                         $selected={isSelected}
                         onClick={() => onCardActivate(subject)}
                         onKeyDown={(e) => onCardKeyDown(e, subject)}
+                        aria-label={`Open ${subject}`}
                       >
                         <SubjectRow>
                           <span>{subject}</span>
-                          <RightIcons>
-                            <Icon size={18} />
-                          </RightIcons>
+                          <div className="icon"><Icon size={18} /></div>
                         </SubjectRow>
 
-                        {isSelected && (
-                          <SubjectRow>
-                            <TeacherName>{teacher}</TeacherName>
-                            <RightIcons>
-                              <CheckCircle className="mt-3" size={18} />
-                            </RightIcons>
-                          </SubjectRow>
-                        )}
-
-                        <ContinueButtonCard
-                          $visible={isSelected}
-                          onClick={handleContinue}
-                        >
-                          Continue to Profile <ArrowRight size={18} />
-                        </ContinueButtonCard>
-                      </CardButton>
+                        <TeachersWrap $selected={isSelected}>
+                          {isSelected ? (
+                            <Chips>
+                              {teachers.map((t) => (
+                                <Chip
+                                  key={t}
+                                  $inSelected
+                                  onClick={(e) => { e.stopPropagation(); onTeacherClick(t); }}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter" || e.key === " ") {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      onTeacherClick(t);
+                                    }
+                                  }}
+                                >
+                                  {t}
+                                </Chip>
+                              ))}
+                            </Chips>
+                          ) : (
+                            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#475569", fontWeight: 700, fontSize: ".86rem" }}>
+                              <span>View teachers</span> <ChevronRight size={16} />
+                            </div>
+                          )}
+                        </TeachersWrap>
+                      </SubjectCard>
                     );
                   })}
                 </SubjectsGrid>
               )}
-            </GradeContainer>
-          </GlassCardHover>
+            </Row>
+          </Section>
         </CardWrapper>
       </PageWrapper>
     </Container>
