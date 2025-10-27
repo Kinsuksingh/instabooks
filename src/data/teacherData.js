@@ -6,9 +6,9 @@ export const teacherData = {
   subject: "SST Teacher",
   bio: "Exploring history, geography & civics 🌍 | Making SST engaging for Classes 6–12 | CBSE Expert",
   avatar: teacherProfileImages.teacherProfilePic,
-  posts: 247,
+  concepts: 247,
   students: "1.2K",
-  books: 15,
+  learns: 15,
   experience: 8,
   bookList: [
     { title: "SST MARATHON" },
