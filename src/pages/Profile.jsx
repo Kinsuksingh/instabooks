@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { FaBook, FaHistory, FaClock, FaUser, FaEdit, FaStar, FaChevronRight } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+import {
+  FaBook,
+  FaHistory,
+  FaClock,
+  FaUser,
+  FaEdit,
+  FaStar,
+  FaChevronRight,
+  FaCog,
+  FaMedal,
+  FaBookOpen,
+  FaChalkboardTeacher,
+  FaHeart,
+} from "react-icons/fa";
 
+// =====================
 // Animations
+// =====================
 const slideUp = keyframes`
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 `;
 
@@ -13,355 +28,509 @@ const fadeIn = keyframes`
   to { opacity: 1; }
 `;
 
-// Styled components
+// =====================
+// Design Tokens (cleaner look)
+// =====================
+const ui = {
+  bg: "#F6F8FB",
+  card: "#FFFFFF",
+  text: "#1F2937",
+  subtext: "#6B7280",
+  primary: "#4F46E5",
+  primarySoft: "#EEF2FF",
+  accent: "#10B981",
+  border: "#E5E7EB",
+  shadow: "0 10px 30px rgba(31, 41, 55, 0.08)",
+};
+
+// =====================
+// Layout
+// =====================
 const Wrapper = styled.div`
+  --bg: ${ui.bg};
+  --card: ${ui.card};
+  --text: ${ui.text};
+  --subtext: ${ui.subtext};
+  --primary: ${ui.primary};
+  --primarySoft: ${ui.primarySoft};
+  --accent: ${ui.accent};
+  --border: ${ui.border};
+  --shadow: ${ui.shadow};
+
+  min-height: 100vh;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at -10% -10%, #EEF2FF 0%, transparent 50%),
+              radial-gradient(1200px 600px at 110% 0%, #ECFDF5 0%, transparent 50%),
+              var(--bg);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(
-  135deg,
-  #8BE3F5 0%,
-  #9FEFD0 50%,
-  #B5F8B5 100%
-);
-  min-height: 100%;
-  padding: 20px;
 `;
 
 const Container = styled.div`
   width: 100%;
+  max-width: 960px;
   margin: 0 auto;
-  animation: ${slideUp} 0.8s ease-out;
+  animation: ${slideUp} 0.6s ease-out;
 `;
 
-const ProfileCard = styled.div`
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 30px;
-  margin-bottom: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+const Card = styled.div`
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+`;
+
+// =====================
+// Profile Header
+// =====================
+const ProfileCard = styled(Card)`
+  padding: 24px;
+  margin-bottom: 16px;
 `;
 
 const ProfileHeader = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  gap: 16px;
 
-  @media(max-width: 600px) {
-    flex-direction: column;
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
     text-align: center;
   }
 `;
 
 const Avatar = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(180deg, var(--primary), #7C3AED);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
 `;
 
 const ProfileInfo = styled.div`
-  flex: 1;
+  display: grid;
+  gap: 6px;
 `;
 
 const UserName = styled.h1`
-  font-size: 2em;
-  color: #2d3748;
-  margin: 0 0 5px 0;
-  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+  margin: 0;
 `;
 
 const UserEmail = styled.p`
-  color: #718096;
-  margin: 0 0 10px 0;
+  color: var(--subtext);
+  margin: 0;
+  font-size: 14px;
 `;
 
-const StatsContainer = styled.div`
+const Actions = styled.div`
   display: flex;
-  gap: 30px;
-  margin-top: 15px;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
 
-  @media(max-width: 600px) {
+  @media (max-width: 640px) {
     justify-content: center;
   }
 `;
 
-const Stat = styled.div`
-  text-align: center;
-`;
-
-const StatNumber = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  color: #667eea;
-`;
-
-const StatLabel = styled.div`
-  font-size: 14px;
-  color: #718096;
-`;
-
-const EditButton = styled.button`
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  display: flex;
+const IconButton = styled.button`
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 10px;
+  cursor: pointer;
   font-weight: 600;
-  transition: transform 0.2s;
+  font-size: 13px;
+  transition: all 0.2s ease;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  &:hover { 
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
   }
 `;
 
-const TabContainer = styled.div`
-  display: flex;
+const Stats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+`;
+
+const Stat = styled.div`
+  background: var(--primarySoft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+`;
+
+const StatIconWrap = styled.div`
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 1px solid var(--border);
+`;
+
+const StatContent = styled.div`
+  display: grid;
+  line-height: 1.1;
+`;
+
+const StatNumber = styled.span`
+  font-weight: 800;
+  color: var(--text);
+`;
+
+const StatLabel = styled.span`
+  font-size: 12px;
+  color: var(--subtext);
+`;
+
+const StatBadge = styled.div`
+  color: #F59E0B;
+`;
+
+// =====================
+// Tabs
+// =====================
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 16px 0;
 `;
 
 const Tab = styled.button`
-  flex: 1;
-  padding: 12px;
-  background: ${props => props.active ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'rgba(255, 255, 255, 0.95)'};
-  color: ${props => props.active ? 'white' : '#718096'};
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: ${(p) => (p.active ? ui.primary : "#fff")};
+  color: ${(p) => (p.active ? "#fff" : ui.subtext)};
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
 
-  &:hover {
-    transform: translateY(-2px);
-  }
+  svg { opacity: ${(p) => (p.active ? 1 : 0.7)}; }
+
+  &:hover { transform: translateY(-1px); }
 `;
 
-const HistoryCard = styled.div`
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  animation: ${fadeIn} 0.5s ease-out;
+// =====================
+// History List
+// =====================
+const HistoryCard = styled(Card)`
+  padding: 16px;
+  animation: ${fadeIn} 0.35s ease-out;
 `;
 
 const HistoryItem = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
   align-items: center;
-  gap: 15px;
-  padding: 15px;
-  background: #f7fafc;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: all 0.3s;
-
-  &:hover {
-    background: #e6f2ff;
-    transform: translateX(5px);
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  transition: all 0.2s ease;
+  &:hover { background: #FAFAFF; transform: translateX(2px); }
+  & + & { margin-top: 10px; }
 `;
 
 const BookIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
+  background: linear-gradient(180deg, var(--primary), #7C3AED);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
 `;
 
 const HistoryInfo = styled.div`
-  flex: 1;
+  display: grid;
+  gap: 6px;
 `;
 
 const BookTitle = styled.h3`
-  margin: 0 0 5px 0;
-  color: #2d3748;
+  margin: 0;
+  color: var(--text);
   font-size: 16px;
 `;
 
 const BookMeta = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
   font-size: 12px;
-  color: #718096;
+  color: var(--subtext);
 `;
 
-const TimeStamp = styled.span`
-  display: flex;
+const MetaChip = styled.span`
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 `;
 
-const Progress = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 5px;
+const ProgressBarWrap = styled.div`
+  width: 140px;
+  height: 8px;
+  background: #F3F4F6;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+`;
+
+const ProgressBar = styled.div`
+  height: 100%;
+  width: ${(p) => Math.min(Math.max(p.value, 0), 100)}%;
+  background: linear-gradient(90deg, var(--primary), #22C55E);
 `;
 
 const ChevronIcon = styled(FaChevronRight)`
-  color: #cbd5e0;
+  color: #D1D5DB;
   font-size: 18px;
 `;
 
+// =====================
+// Empty State
+// =====================
 const EmptyState = styled.div`
   text-align: center;
-  padding: 40px;
-  color: #718096;
+  padding: 48px 12px;
+  color: var(--subtext);
 `;
 
 const EmptyIcon = styled.div`
-  font-size: 60px;
-  margin-bottom: 15px;
+  font-size: 56px;
+  margin-bottom: 10px;
   opacity: 0.5;
 `;
 
-export default function UserProfile() {
-  const [activeTab, setActiveTab] = useState('history');
-  useEffect(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }, []);
+// =====================
+// Favorites Grid (clean cards)
+// =====================
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
+  gap: 12px;
+`;
 
-  // Sample user data
+const FavCard = styled(Card)`
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+`;
+
+const FavTitle = styled.div`
+  font-weight: 700;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const FavMeta = styled.div`
+  font-size: 12px;
+  color: var(--subtext);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const FavActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SoftBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  &:hover { border-color: var(--primary); color: var(--primary); }
+`;
+
+// =====================
+// Component
+// =====================
+export default function UserProfile() {
+  const [activeTab, setActiveTab] = useState("history");
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: "auto" }); }, []);
+
+  // Sample user data (SST themed)
   const userData = {
     name: "Priya Sharma",
     email: "priya.sharma@example.com",
     avatar: "PS",
     booksRead: 24,
     hoursSpent: 156,
-    favoriteTeacher: "Ms. Sarah"
+    favoriteTeacher: "Ms. Sarah",
   };
 
-  // Sample history data
+  // Sample history data (SST subjects)
   const historyData = [
-    {
-      id: 1,
-      title: "Advanced Mathematics",
-      teacher: "Prof. Michael Chen",
-      time: "2 hours ago",
-      progress: 75,
-      icon: "📐"
-    },
-    {
-      id: 2,
-      title: "Introduction to Physics",
-      teacher: "Dr. Sarah Johnson",
-      time: "Yesterday",
-      progress: 45,
-      icon: "⚡"
-    },
-    {
-      id: 3,
-      title: "Chemistry Fundamentals",
-      teacher: "Mr. David Kumar",
-      time: "2 days ago",
-      progress: 90,
-      icon: "🧪"
-    },
-    {
-      id: 4,
-      title: "Biology Basics",
-      teacher: "Dr. Emily Brown",
-      time: "1 week ago",
-      progress: 100,
-      icon: "🧬"
-    }
+    { id: 1, title: "Sense of Collective Identity", teacher: "Mr. Arjun Mehta", time: "2 hours ago", progress: 75, icon: <FaChalkboardTeacher /> },
+    { id: 2, title: "Understanding Diversity", teacher: "Ms. Nisha Rao", time: "Yesterday", progress: 45, icon: <FaBook /> },
+    { id: 3, title: "Nationalism in India", teacher: "Dr. Kavita Iyer", time: "2 days ago", progress: 90, icon: <FaHistory /> },
+    { id: 4, title: "Democracy & Rights", teacher: "Prof. R. Menon", time: "1 week ago", progress: 100, icon: <FaMedal /> },
+  ];
+
+  const favorites = [
+    { id: "f1", title: "Globalisation & Indian Economy", by: "Siddharth Sir", reads: 12 },
+    { id: "f2", title: "Federalism Basics", by: "Anita Ma'am", reads: 9 },
+    { id: "f3", title: "Judiciary: Structure", by: "R. Sharma", reads: 14 },
+    { id: "f4", title: "Gender, Religion & Caste", by: "S. Verma", reads: 7 },
   ];
 
   return (
     <Wrapper>
       <Container>
+        {/* Profile */}
         <ProfileCard>
           <ProfileHeader>
-            <Avatar>{userData.avatar}</Avatar>
-            <ProfileInfo>
-              <UserName>{userData.name}</UserName>
-              <UserEmail>{userData.email}</UserEmail>
-              <StatsContainer>
+            <Avatar aria-label="User avatar"><FaUser size={24} /></Avatar>
+
+            <div>
+              <ProfileInfo>
+                <UserName>{userData.name}</UserName>
+                <UserEmail>{userData.email}</UserEmail>
+              </ProfileInfo>
+
+              <Stats>
                 <Stat>
-                  <StatNumber>{userData.booksRead}</StatNumber>
-                  <StatLabel>Books Read</StatLabel>
+                  <StatIconWrap aria-hidden="true"><FaBook /></StatIconWrap>
+                  <StatContent>
+                    <StatNumber>{userData.booksRead}</StatNumber>
+                    <StatLabel>Books Read</StatLabel>
+                  </StatContent>
+                  <StatBadge title="Lifetime reads"><FaMedal /></StatBadge>
                 </Stat>
+
                 <Stat>
-                  <StatNumber>{userData.hoursSpent}</StatNumber>
-                  <StatLabel>Hours</StatLabel>
+                  <StatIconWrap aria-hidden="true"><FaClock /></StatIconWrap>
+                  <StatContent>
+                    <StatNumber>{userData.hoursSpent}</StatNumber>
+                    <StatLabel>Study Hours</StatLabel>
+                  </StatContent>
+                  <StatBadge title="Consistent!"><FaStar /></StatBadge>
                 </Stat>
+
                 <Stat>
-                  <StatNumber>
-                    <FaStar style={{color: '#fbbf24'}} />
-                  </StatNumber>
-                  <StatLabel>{userData.favoriteTeacher}</StatLabel>
+                  <StatIconWrap aria-hidden="true"><FaChalkboardTeacher /></StatIconWrap>
+                  <StatContent>
+                    <StatNumber>{userData.favoriteTeacher}</StatNumber>
+                    <StatLabel>Favourite Teacher</StatLabel>
+                  </StatContent>
+                  <StatBadge><FaHeart /></StatBadge>
                 </Stat>
-              </StatsContainer>
-            </ProfileInfo>
-            <EditButton>
-              <FaEdit /> Edit Profile
-            </EditButton>
+              </Stats>
+            </div>
+
+            <Actions>
+              <IconButton aria-label="Edit profile"><FaEdit /> Edit</IconButton>
+              <IconButton aria-label="Settings"><FaCog /> Settings</IconButton>
+            </Actions>
           </ProfileHeader>
         </ProfileCard>
 
-        <TabContainer>
-          <Tab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>
+        {/* Tabs */}
+        <Tabs>
+          <Tab active={activeTab === "history"} onClick={() => setActiveTab("history")} aria-pressed={activeTab === "history"}>
             <FaHistory /> Reading History
           </Tab>
-          <Tab active={activeTab === 'favorites'} onClick={() => setActiveTab('favorites')}>
+          <Tab active={activeTab === "favorites"} onClick={() => setActiveTab("favorites")} aria-pressed={activeTab === "favorites"}>
             <FaStar /> Favorites
           </Tab>
-        </TabContainer>
+        </Tabs>
 
-        <HistoryCard>
-          {activeTab === 'history' && historyData.length > 0 ? (
-            historyData.map((item) => (
-              <HistoryItem key={item.id}>
-                <BookIcon>{item.icon}</BookIcon>
-                <HistoryInfo>
-                  <BookTitle>{item.title}</BookTitle>
-                  <BookMeta>
-                    <TimeStamp>
-                      <FaClock /> {item.time}
-                    </TimeStamp>
-                    <Progress>
-                      <FaBook /> {item.progress}% complete
-                    </Progress>
-                  </BookMeta>
-                </HistoryInfo>
-                <ChevronIcon />
-              </HistoryItem>
-            ))
-          ) : (
-            <EmptyState>
-              <EmptyIcon>📚</EmptyIcon>
-              <h3>No Reading History Yet</h3>
-              <p>Start reading books to see them here!</p>
-            </EmptyState>
-          )}
-        </HistoryCard>
+        {/* Content */}
+        {activeTab === "history" ? (
+          <HistoryCard>
+            {historyData.length > 0 ? (
+              historyData.map((item) => (
+                <HistoryItem key={item.id} role="button" tabIndex={0}>
+                  <BookIcon aria-hidden="true">{item.icon}</BookIcon>
+                  <HistoryInfo>
+                    <BookTitle>{item.title}</BookTitle>
+                    <BookMeta>
+                      <MetaChip><FaChalkboardTeacher /> {item.teacher}</MetaChip>
+                      <MetaChip><FaClock /> {item.time}</MetaChip>
+                      <MetaChip><FaBook /> {item.progress}% complete</MetaChip>
+                    </BookMeta>
+                    <ProgressBarWrap aria-label={`Progress ${item.progress}%`}>
+                      <ProgressBar value={item.progress} />
+                    </ProgressBarWrap>
+                  </HistoryInfo>
+                  <ChevronIcon />
+                </HistoryItem>
+              ))
+            ) : (
+              <EmptyState>
+                <EmptyIcon><FaBookOpen /></EmptyIcon>
+                <h3>No Reading History Yet</h3>
+                <p>Start exploring SST chapters to see them here.</p>
+              </EmptyState>
+            )}
+          </HistoryCard>
+        ) : (
+          <HistoryCard>
+            {favorites.length > 0 ? (
+              <Grid>
+                {favorites.map((f) => (
+                  <FavCard key={f.id}>
+                    <FavTitle><FaBook /> {f.title}</FavTitle>
+                    <FavMeta><FaChalkboardTeacher /> {f.by} • <FaHistory /> {f.reads} reads</FavMeta>
+                    <FavActions>
+                      <SoftBtn aria-label="Open"><FaChevronRight /> Open</SoftBtn>
+                      <SoftBtn aria-label="Unfavorite"><FaHeart /> Unfavorite</SoftBtn>
+                    </FavActions>
+                  </FavCard>
+                ))}
+              </Grid>
+            ) : (
+              <EmptyState>
+                <EmptyIcon><FaStar /></EmptyIcon>
+                <h3>No Favorites Yet</h3>
+                <p>Tap the <FaStar style={{verticalAlign: 'middle'}} /> on any chapter to save it here.</p>
+              </EmptyState>
+            )}
+          </HistoryCard>
+        )}
       </Container>
     </Wrapper>
   );

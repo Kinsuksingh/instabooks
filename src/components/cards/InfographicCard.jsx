@@ -7,6 +7,7 @@ import {
 } from "react-icons/ai";
 import { BsChat, BsBookmark, BsBookmarkFill, BsThreeDots } from "react-icons/bs";
 import { FiSend } from "react-icons/fi";
+import { teacherProfileImages } from "../../assets/exportImg";
 
 /**
  * Instagram-style Post Card with LinkedIn-like reaction summary and a share button.
@@ -164,11 +165,11 @@ const TimeStamp = styled.time`
 `;
 
 export default function InstaPostCard({
-  username = "ui.maker",
-  userSubline = "Designer · 2h",
-  avatarSrc = "https://i.pravatar.cc/300?img=5",
-  title = "Infographic Title",
-  description = "A short, crisp line describing what this infographic is about.",
+  username = "Siddharth Sir",
+  userSubline = "SST Teacher",
+  avatarSrc = teacherProfileImages.teacherProfilePic,
+  title = "Sense of Collective Identity - Overview",
+  description = "Understanding how shared culture, values, and history build national unity and belonging.",
   imgSrc = "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop",
   likedDefault = false,
   savedDefault = false,

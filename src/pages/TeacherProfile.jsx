@@ -365,7 +365,7 @@ export default function TeacherProfile() {
       </ProfileSection>
 
       <Tabs>
-        <TabButton active>
+        <TabButton>
           <Grid size={20} />
         </TabButton>
         <TabButton>
