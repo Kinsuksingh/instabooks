@@ -261,7 +261,7 @@ export default function TeacherProfile() {
               <Avatar src={teacher.avatar} alt={teacher.name} />
             </AvatarWrapper>
             <StatsMobile>
-              <Stat>{teacher.posts} <span>concept</span></Stat>
+              <Stat>{teacher.posts} <span>concepts</span></Stat>
               <Stat>{teacher.students} <span>students</span></Stat>
               <Stat>{teacher.books} <span>learns</span></Stat>
             </StatsMobile>
