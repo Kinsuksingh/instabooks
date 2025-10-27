@@ -247,6 +247,9 @@ const GhostBtn = styled.button`
 /* -------------------------------- Component ------------------------------ */
 
 export default function TeacherProfile() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
   const navigate = useNavigate();
 
   // UI state for pricing + join
