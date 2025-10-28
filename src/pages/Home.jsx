@@ -344,7 +344,7 @@ export default function InstalearnApp() {
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, wordIndex]);
+  });
 
   /* ---------- Data (multiple teachers) ---------- */
   const grades = {
