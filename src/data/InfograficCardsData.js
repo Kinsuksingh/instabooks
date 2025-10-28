@@ -40,6 +40,13 @@ export const InfograficCardsData = [
     description: "A short video summarizing real-world examples of collective identity shaping societies.",
     vedioClipSrc: videoClips.videoClip1,
   },
+  {
+    id: 6,
+    type: "infografic",
+    title: "Sense of Collective Identity - Overview",
+    description: "An overview of how shared history, culture, and values shape collective identity in society.",
+    imgSrc: sstSlides.Slide5,
+  },
 ];
 
 // Function to append new data
