@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsBookmark, BsBookmarkFill, BsThreeDots, BsChat } from "react-icons/bs";
+import { teacherProfileImages } from "../../assets/exportImg";
+import { FiSend } from "react-icons/fi";
 
 /* --- Card Styling --- */
 const Card = styled.article`
@@ -10,54 +12,59 @@ const Card = styled.article`
   margin: 20px auto;
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(180deg, #dff6ff 0%, #bce0ff 100%);
+  background: #fff;
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
 `;
 
+// const PlayerWrapper = styled.div`
+//   position: relative;
+//   padding-top: 56.25%; /* 16:9 Aspect Ratio */
+//   background: #000;
+
+//   video {
+//     position: absolute;
+//     inset: 0;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     display: block;
+//   }
+// `;
+
+
 const PlayerWrapper = styled.div`
   position: relative;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  padding-top: 100%; /* Default: square for mobile */
   background: #000;
+
+  @media (min-width: 768px) {
+    padding-top: 56.25%; /* Switch to 16:9 on larger screens */
+  }
 
   video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* fill the frame nicely */
-    display: block;
+    object-fit: cover;
   }
 `;
 
-const Content = styled.div`
+
+
+
+
+
+const ActionsBar = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 16px 18px 20px;
-  color: #0f172a;
-`;
-
-const Left = styled.div`
-  flex: 1 1 auto;
-`;
-
-const Title = styled.h3`
-  margin: 0 0 6px;
-  font-size: clamp(18px, 2.2vw, 22px);
-  line-height: 1.2;
-`;
-
-const Desc = styled.p`
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #334155;
-`;
-
-const Actions = styled.div`
-  display: flex;
-  gap: 10px;
   align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+`;
+
+const ActionsLeft = styled.div`
+  display: flex;
+  gap: 12px;
 `;
 
 const IconBtn = styled.button`
@@ -66,26 +73,80 @@ const IconBtn = styled.button`
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(6px);
+  border: none;
+  background: transparent;
+  color: #0f172a;
   cursor: pointer;
-  transition: transform 140ms ease;
-
+  transition: transform 120ms ease, background 120ms ease;
   &:hover {
-    transform: translateY(-2px);
+    background: rgba(15, 23, 42, 0.06);
   }
   &:active {
-    transform: translateY(0);
+    transform: scale(0.98);
+  }
+`;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+`;
+
+const HeaderLeft = styled.div`
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+  align-items: center;
+`;
+
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eef2ff;
+`;
+
+const UserBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+`;
+
+const Title = styled.span`
+  font-weight: 600;
+  color: #0f172a;
+`;
+
+const Description = styled.span`
+  font-size: 12px;
+  color: #64748b;
+`;
+
+const MenuBtn = styled.button`
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  &:hover {
+    background: rgba(15, 23, 42, 0.04);
   }
 `;
 
 export default function VideoClipCard({
+  avatarSrc = teacherProfileImages.teacherProfilePic,
   data,
   likedDefault = false,
   savedDefault = false,
   onLikeChange,
   onBookmarkChange,
+  onShare, // optional
 }) {
   // Accept either "videoClipSrc" (preferred) or legacy "vedioClipSrc"
   const src = data?.videoClipSrc || data?.vedioClipSrc;
@@ -93,6 +154,10 @@ export default function VideoClipCard({
 
   const [liked, setLiked] = useState(likedDefault);
   const [saved, setSaved] = useState(savedDefault);
+
+  const ariaLabelLike = liked ? "Unlike post" : "Like post";
+  const ariaLabelSave = saved ? "Remove bookmark" : "Bookmark";
+
   const videoRef = useRef(null);
 
   const toggleLike = () => {
@@ -107,16 +172,39 @@ export default function VideoClipCard({
     onBookmarkChange && onBookmarkChange(next);
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: title || "Check this video",
+      text: description || "",
+      url:
+        (typeof window !== "undefined" && window.location?.href) ||
+        (data?.url ?? ""),
+    };
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+      } else if (typeof navigator !== "undefined" && navigator.clipboard && shareData.url) {
+        await navigator.clipboard.writeText(shareData.url);
+        // Prefer non-blocking UX; you can swap for a toast in your app
+        alert("Link copied to clipboard");
+      }
+      onShare && onShare(shareData);
+    } catch (e) {
+      // ignore if user cancels; log others
+      console.log(e)
+    }
+  };
+
   // Best-effort auto-play for browsers that gate autoplay
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
-    // Try to play; ignore failures (e.g., user gesture required)
     const tryPlay = async () => {
       try {
         await el.play();
       } catch {
-        // If autoplay is blocked, leave the controls visible for user to start
+        // If autoplay is blocked, controls remain visible for user to start.
       }
     };
     tryPlay();
@@ -125,7 +213,20 @@ export default function VideoClipCard({
   if (!src) return null;
 
   return (
-    <Card>
+    <Card aria-label="Video post">
+      <Header>
+        <HeaderLeft>
+          <Avatar src={avatarSrc} alt="Author avatar" />
+          <UserBlock>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+          </UserBlock>
+        </HeaderLeft>
+        <MenuBtn aria-label="Post menu" title="More options">
+          <BsThreeDots size={18} />
+        </MenuBtn>
+      </Header>
+
       <PlayerWrapper>
         <video
           ref={videoRef}
@@ -141,30 +242,33 @@ export default function VideoClipCard({
         />
       </PlayerWrapper>
 
-      <Content>
-        <Left>
-          <Title>{title}</Title>
-          {description && <Desc>{description}</Desc>}
-        </Left>
-
-        <Actions>
+      <ActionsBar>
+        <ActionsLeft>
           <IconBtn
             onClick={toggleLike}
-            aria-label={liked ? "Unlike video" : "Like video"}
-            title={liked ? "Unlike" : "Like"}
+            aria-label={ariaLabelLike}
+            title={ariaLabelLike}
           >
-            {liked ? <AiFillLike size={20} /> : <AiOutlineLike size={20} />}
+            {liked ? <AiFillHeart size={22} /> : <AiOutlineHeart size={22} />}
           </IconBtn>
 
-          <IconBtn
-            onClick={toggleSave}
-            aria-label={saved ? "Remove bookmark" : "Bookmark video"}
-            title={saved ? "Remove bookmark" : "Bookmark"}
-          >
-            {saved ? <BsBookmarkFill size={18} /> : <BsBookmark size={18} />}
+          <IconBtn aria-label="Comment" title="Comment">
+            <BsChat size={20} />
           </IconBtn>
-        </Actions>
-      </Content>
+
+          <IconBtn onClick={handleShare} aria-label="Share" title="Share">
+            <FiSend size={20} />
+          </IconBtn>
+        </ActionsLeft>
+
+        <IconBtn
+          onClick={toggleSave}
+          aria-label={ariaLabelSave}
+          title={ariaLabelSave}
+        >
+          {saved ? <BsBookmarkFill size={20} /> : <BsBookmark size={20} />}
+        </IconBtn>
+      </ActionsBar>
     </Card>
   );
 }

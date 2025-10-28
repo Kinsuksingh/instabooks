@@ -5,17 +5,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsChat } from "react-icons/bs";
 import { FiSend } from "react-icons/fi";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-
-/**
- * Instagram-style MULTI-IMAGE post
- * - Square media carousel (no autoplay), swipe/drag enabled
- * - Dots overlaid at the bottom of the image like Instagram
- * - Slide counter pill on the top-right
- * - Action row: Like / Comment / Share (left) + Bookmark (right)
- * - Like & Bookmark are for the *post* (not per-slide), like Instagram
- * - Optional: caption/description + like count text
- */
+import { BsBookmark, BsBookmarkFill, BsThreeDots } from "react-icons/bs";
+import { teacherProfileImages } from "../../assets/exportImg";
 
 const IGCarouselTweaks = createGlobalStyle`
   /* Position control dots inside the image like Instagram */
@@ -86,6 +77,21 @@ const ActionsLeft = styled.div`
   gap: 12px;
 `;
 
+const MenuBtn = styled.button`
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  &:hover {
+    background: rgba(15, 23, 42, 0.04);
+  }
+`;
+
 const IconBtn = styled.button`
   display: grid;
   place-items: center;
@@ -97,38 +103,57 @@ const IconBtn = styled.button`
   color: #0f172a;
   cursor: pointer;
   transition: transform 120ms ease, background 120ms ease;
-  &:hover { background: rgba(15, 23, 42, 0.06); }
-  &:active { transform: scale(0.98); }
+  &:hover {
+    background: rgba(15, 23, 42, 0.06);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
-const Meta = styled.div`
-  padding: 0 12px 12px 12px;
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
 `;
 
-const LikesText = styled.div`
+const HeaderLeft = styled.div`
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+  align-items: center;
+`;
+
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eef2ff;
+`;
+
+const UserBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+`;
+
+const Title = styled.span`
   font-weight: 600;
-  font-size: 14px;
   color: #0f172a;
 `;
 
-const Caption = styled.p`
-  margin: 6px 0 4px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #0f172a;
-`;
-
-const TimeStamp = styled.time`
-  display: block;
+const Description = styled.span`
   font-size: 12px;
   color: #64748b;
 `;
 
 export default function InstagramMultiImagePost({
+  avatarSrc = teacherProfileImages.teacherProfilePic,
   data,
   likedDefault = false,
   savedDefault = false,
-  likeCountDefault = 0,
   onLikeChange,
   onBookmarkChange,
   onShare,
@@ -142,7 +167,6 @@ export default function InstagramMultiImagePost({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [liked, setLiked] = useState(likedDefault);
   const [saved, setSaved] = useState(savedDefault);
-  const [likeCount, setLikeCount] = useState(likeCountDefault);
 
   const ariaLabelLike = liked ? "Unlike post" : "Like post";
   const ariaLabelSave = saved ? "Remove bookmark" : "Bookmark";
@@ -150,7 +174,6 @@ export default function InstagramMultiImagePost({
   const toggleLike = () => {
     const next = !liked;
     setLiked(next);
-    setLikeCount((c) => (next ? c + 1 : Math.max(0, c - 1)));
     onLikeChange && onLikeChange(next);
   };
 
@@ -160,11 +183,14 @@ export default function InstagramMultiImagePost({
     onBookmarkChange && onBookmarkChange(next);
   };
 
-  const shareData = useMemo(() => ({
-    title,
-    text: `${title}`,
-    url: typeof window !== "undefined" ? window.location.href : "",
-  }), [title]);
+  const shareData = useMemo(
+    () => ({
+      title,
+      text: `${title}`,
+      url: typeof window !== "undefined" ? window.location.href : "",
+    }),
+    [title]
+  );
 
   const handleShare = async () => {
     try {
@@ -185,6 +211,18 @@ export default function InstagramMultiImagePost({
 
   return (
     <Card role="article" aria-label={`${title} – Instagram multi-image post`}>
+      <Header>
+        <HeaderLeft>
+          <Avatar src={avatarSrc} alt={`avatar`} />
+          <UserBlock>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+          </UserBlock>
+        </HeaderLeft>
+        <MenuBtn aria-label="Post menu" title="More">
+          <BsThreeDots size={18} />
+        </MenuBtn>
+      </Header>
       <IGCarouselTweaks />
 
       <MediaWrap>
@@ -216,7 +254,11 @@ export default function InstagramMultiImagePost({
 
       <ActionsBar>
         <ActionsLeft>
-          <IconBtn onClick={toggleLike} aria-label={ariaLabelLike} title={ariaLabelLike}>
+          <IconBtn
+            onClick={toggleLike}
+            aria-label={ariaLabelLike}
+            title={ariaLabelLike}
+          >
             {liked ? <AiFillHeart size={22} /> : <AiOutlineHeart size={22} />}
           </IconBtn>
           <IconBtn aria-label="Comment" title="Comment">
@@ -226,20 +268,14 @@ export default function InstagramMultiImagePost({
             <FiSend size={20} />
           </IconBtn>
         </ActionsLeft>
-        <IconBtn onClick={toggleSave} aria-label={ariaLabelSave} title={ariaLabelSave}>
+        <IconBtn
+          onClick={toggleSave}
+          aria-label={ariaLabelSave}
+          title={ariaLabelSave}
+        >
           {saved ? <BsBookmarkFill size={20} /> : <BsBookmark size={20} />}
         </IconBtn>
       </ActionsBar>
-
-      <Meta>
-        <LikesText>{likeCount} likes</LikesText>
-        {description && (
-          <Caption>
-            <strong>{title}</strong> {description}
-          </Caption>
-        )}
-        <TimeStamp dateTime={new Date().toISOString()}>Just now</TimeStamp>
-      </Meta>
     </Card>
   );
 }
