@@ -323,7 +323,7 @@ Infographic context:
     opacity: 1;
   }
 `,m3=b.img`
-  width: 500px;
+  width: 300px;
   height: 100%;
   object-fit: cover;
   border-radius: 14px;
