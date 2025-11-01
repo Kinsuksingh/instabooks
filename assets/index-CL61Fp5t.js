@@ -324,7 +324,7 @@ Infographic context:
   }
 `,m3=b.img`
   width: 500px;
-  height: 500px;
+  height: 100%;
   object-fit: cover;
   border-radius: 14px;
   user-drag: none;
